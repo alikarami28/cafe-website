@@ -82,16 +82,40 @@ function renderMenu() {
     }
 }
 
+// 🆕 Preloader اصلاح شده
 function initPreloader() {
     const preloader = document.getElementById('preloader');
-    if (preloader) {
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                preloader.classList.add('hidden');
-                setTimeout(() => { preloader.style.display = 'none'; }, 500);
-            }, 1500);
-        });
+    if (!preloader) return;
+    
+    // Force hide after 3 seconds max
+    const forceHideTimeout = setTimeout(() => {
+        hidePreloader(preloader);
+    }, 3000);
+    
+    // Hide when page loads
+    window.addEventListener('load', () => {
+        clearTimeout(forceHideTimeout);
+        setTimeout(() => {
+            hidePreloader(preloader);
+        }, 500);
+    });
+    
+    // Fallback: hide when DOM is ready
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        clearTimeout(forceHideTimeout);
+        setTimeout(() => {
+            hidePreloader(preloader);
+        }, 1000);
     }
+}
+
+function hidePreloader(preloader) {
+    if (!preloader || preloader.classList.contains('hidden')) return;
+    
+    preloader.classList.add('hidden');
+    setTimeout(() => {
+        preloader.style.display = 'none';
+    }, 500);
 }
 
 function initSmoothScroll() {
@@ -129,9 +153,15 @@ function initHeaderScroll() {
     }
 }
 
+// 🆕 شروع برنامه
 document.addEventListener('DOMContentLoaded', async () => {
-    await loadMenuData();
+    // اول preloader رو مخفی کن
     initPreloader();
+    
+    // بعد محصولات رو لود کن
+    await loadMenuData();
+    
+    // بقیه تنظیمات
     initSmoothScroll();
     initHeaderScroll();
     initBannerScroll();
