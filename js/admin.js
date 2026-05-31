@@ -1,13 +1,10 @@
 // =============================================
-// Admin Panel - کافه آرا ARA Cafe (نسخه Local)
+// Admin Panel - کافه آرا ARA Cafe
 // =============================================
-// 🟢 این پنل فقط روی کامپیوتر خودتان کار می‌کند
-// 🟢 بعد از اضافه کردن محصولات، فایل data/menu.json را
-// 🟢 روی GitHub پوش کنید تا روی سایت نمایش داده شود
 
 const ADMIN_USERNAME = 'admin';
 const ADMIN_PASSWORD = 'cafe123';
-const MAX_IMAGE_SIZE = 2 * 1024 * 1024;
+const MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2MB
 
 // =============================================
 // Login
@@ -49,7 +46,7 @@ function initLogin() {
 }
 
 // =============================================
-// Menu Data Management (Local Storage)
+// Menu Data
 // =============================================
 function getMenuData() {
     const stored = localStorage.getItem('cafeMenuData');
@@ -70,29 +67,6 @@ function saveMenuData(data) {
     localStorage.setItem('cafeMenuData', JSON.stringify(data));
 }
 
-// 🆕 خروجی گرفتن برای فایل JSON
-function exportToJSON() {
-    const data = getMenuData();
-    const jsonStr = JSON.stringify(data, null, 2);
-    
-    // نمایش در console
-    console.log('📋 محتوای فایل menu.json:');
-    console.log(jsonStr);
-    
-    // دانلود فایل
-    const blob = new Blob([jsonStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'menu.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    
-    alert('✅ فایل menu.json دانلود شد!\n\n📁 آن را در پوشه data/ جایگزین کنید\n📤 سپس روی GitHub پوش کنید');
-}
-
 function generateId() {
     return 'id_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
 }
@@ -106,6 +80,175 @@ const categoryNames = {
     cold: 'نوشیدنی سرد',
     tea: 'چای و دمنوش'
 };
+
+// =============================================
+// 🆕 Image Upload Handler
+// =============================================
+let addFormImageData = '';  // ذخیره عکس فرم افزودن
+let editFormImageData = ''; // ذخیره عکس فرم ویرایش
+
+// راه‌اندازی آپلود عکس برای فرم افزودن
+function initAddImageUpload() {
+    const container = document.getElementById('imageUploadContainer');
+    const input = document.getElementById('itemImage');
+    const preview = document.getElementById('imagePreview');
+    
+    if (!container || !input || !preview) return;
+    
+    // کلیک روی container
+    container.addEventListener('click', function() {
+        input.click();
+    });
+    
+    // انتخاب فایل
+    input.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        // بررسی نوع فایل
+        if (!file.type.startsWith('image/')) {
+            alert('❌ فقط فایل تصویری مجاز است');
+            input.value = '';
+            return;
+        }
+        
+        // بررسی حجم
+        if (file.size > MAX_IMAGE_SIZE) {
+            alert('❌ حجم فایل نباید بیشتر از 2 مگابایت باشد');
+            input.value = '';
+            return;
+        }
+        
+        // خواندن فایل
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            addFormImageData = e.target.result;
+            preview.innerHTML = `<img src="${addFormImageData}" alt="Preview" style="width:100%;height:200px;object-fit:cover;border-radius:8px;">`;
+            container.classList.add('has-image');
+            console.log('✅ عکس افزودن آماده شد');
+        };
+        reader.onerror = function() {
+            alert('❌ خطا در خواندن فایل');
+        };
+        reader.readAsDataURL(file);
+    });
+    
+    // Drag & Drop
+    container.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        container.classList.add('drag-over');
+    });
+    
+    container.addEventListener('dragleave', function() {
+        container.classList.remove('drag-over');
+    });
+    
+    container.addEventListener('drop', function(e) {
+        e.preventDefault();
+        container.classList.remove('drag-over');
+        
+        const file = e.dataTransfer.files[0];
+        if (file) {
+            input.files = e.dataTransfer.files;
+            input.dispatchEvent(new Event('change'));
+        }
+    });
+}
+
+// راه‌اندازی آپلود عکس برای فرم ویرایش
+function initEditImageUpload() {
+    const container = document.getElementById('editImageUploadContainer');
+    const input = document.getElementById('editItemImage');
+    const preview = document.getElementById('editImagePreview');
+    
+    if (!container || !input || !preview) return;
+    
+    // کلیک روی container
+    container.addEventListener('click', function(e) {
+        // اگه روی دکمه‌ها کلیک شده، هیچ کاری نکن
+        if (e.target.closest('button')) return;
+        input.click();
+    });
+    
+    // انتخاب فایل
+    input.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        if (!file.type.startsWith('image/')) {
+            alert('❌ فقط فایل تصویری مجاز است');
+            input.value = '';
+            return;
+        }
+        
+        if (file.size > MAX_IMAGE_SIZE) {
+            alert('❌ حجم فایل نباید بیشتر از 2 مگابایت باشد');
+            input.value = '';
+            return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            editFormImageData = e.target.result;
+            preview.innerHTML = `
+                <img src="${editFormImageData}" alt="Preview" style="width:100%;height:200px;object-fit:cover;border-radius:8px;">
+                <div style="display:flex;gap:8px;margin-top:8px;">
+                    <button type="button" onclick="document.getElementById('editItemImage').click()" style="background:rgba(79,195,247,0.2);color:#4FC3F7;border:1px solid rgba(79,195,247,0.3);padding:6px 12px;border-radius:6px;cursor:pointer;">🔄 تغییر</button>
+                    <button type="button" onclick="removeEditImage()" style="background:rgba(255,107,107,0.2);color:#ff6b6b;border:1px solid rgba(255,107,107,0.3);padding:6px 12px;border-radius:6px;cursor:pointer;">🗑️ حذف</button>
+                </div>
+            `;
+            container.classList.add('has-image');
+            console.log('✅ عکس ویرایش آماده شد');
+        };
+        reader.onerror = function() {
+            alert('❌ خطا در خواندن فایل');
+        };
+        reader.readAsDataURL(file);
+    });
+    
+    // Drag & Drop
+    container.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        container.classList.add('drag-over');
+    });
+    
+    container.addEventListener('dragleave', function() {
+        container.classList.remove('drag-over');
+    });
+    
+    container.addEventListener('drop', function(e) {
+        e.preventDefault();
+        container.classList.remove('drag-over');
+        
+        const file = e.dataTransfer.files[0];
+        if (file) {
+            input.files = e.dataTransfer.files;
+            input.dispatchEvent(new Event('change'));
+        }
+    });
+}
+
+// حذف عکس در فرم ویرایش
+function removeEditImage() {
+    editFormImageData = '';
+    const preview = document.getElementById('editImagePreview');
+    const container = document.getElementById('editImageUploadContainer');
+    const input = document.getElementById('editItemImage');
+    
+    if (preview) {
+        preview.innerHTML = `
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.5;">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <span style="opacity:0.7;">برای آپلود عکس کلیک کنید</span>
+        `;
+    }
+    if (container) container.classList.remove('has-image');
+    if (input) input.value = '';
+    console.log('🗑️ عکس ویرایش حذف شد');
+}
 
 // =============================================
 // Find Item
@@ -141,7 +284,7 @@ function deleteProduct(itemId) {
 }
 
 // =============================================
-// Edit Product
+// Edit Product - Open Modal
 // =============================================
 function editProduct(itemId) {
     const result = findItemById(itemId);
@@ -155,14 +298,34 @@ function editProduct(itemId) {
     document.getElementById('editItemDescription').value = item.description || '';
     document.getElementById('editItemCategory').value = item.category;
     
+    // Reset image
+    editFormImageData = item.image || '';
     const preview = document.getElementById('editImagePreview');
     const container = document.getElementById('editImageUploadContainer');
+    const input = document.getElementById('editItemImage');
+    
+    if (input) input.value = '';
     
     if (preview) {
-        if (item.image) {
-            preview.innerHTML = `<img src="${item.image}" alt="Preview" style="width:100%;height:200px;object-fit:cover;border-radius:8px;">`;
+        if (editFormImageData) {
+            preview.innerHTML = `
+                <img src="${editFormImageData}" alt="Preview" style="width:100%;height:200px;object-fit:cover;border-radius:8px;">
+                <div style="display:flex;gap:8px;margin-top:8px;">
+                    <button type="button" onclick="document.getElementById('editItemImage').click()" style="background:rgba(79,195,247,0.2);color:#4FC3F7;border:1px solid rgba(79,195,247,0.3);padding:6px 12px;border-radius:6px;cursor:pointer;">🔄 تغییر</button>
+                    <button type="button" onclick="removeEditImage()" style="background:rgba(255,107,107,0.2);color:#ff6b6b;border:1px solid rgba(255,107,107,0.3);padding:6px 12px;border-radius:6px;cursor:pointer;">🗑️ حذف</button>
+                </div>
+            `;
+            if (container) container.classList.add('has-image');
         } else {
-            preview.innerHTML = `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.5;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>برای آپلود عکس کلیک کنید</span>`;
+            preview.innerHTML = `
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.5;">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21 15 16 10 5 21"/>
+                </svg>
+                <span style="opacity:0.7;">برای آپلود عکس کلیک کنید</span>
+            `;
+            if (container) container.classList.remove('has-image');
         }
     }
     
@@ -192,36 +355,31 @@ function saveEdit(e) {
     
     const data = getMenuData();
     
-    let image = '';
-    const oldItem = findItemById(id);
-    if (oldItem) image = oldItem.item.image || '';
-    
-    const fileInput = document.getElementById('editItemImage');
-    if (fileInput && fileInput.files && fileInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            image = e.target.result;
-            finishEdit(data, id, name, price, description, category, image);
-        };
-        reader.readAsDataURL(fileInput.files[0]);
-        return;
-    }
-    
-    finishEdit(data, id, name, price, description, category, image);
-}
-
-function finishEdit(data, id, name, price, description, category, image) {
+    // حذف آیتم قدیمی
     for (const cat in data) {
         const index = data[cat].findIndex(i => i.id === id);
         if (index !== -1) { data[cat].splice(index, 1); break; }
     }
     
-    const updatedItem = { id, name, price, description, category, image };
+    // اضافه کردن آیتم جدید با عکس
+    const updatedItem = {
+        id: id,
+        name: name,
+        price: price,
+        description: description,
+        category: category,
+        image: editFormImageData  // 🆕 عکس از متغیر global
+    };
+    
     data[category].push(updatedItem);
     saveMenuData(data);
     
+    // بستن مودال
     const modal = document.getElementById('editModal');
     if (modal) { modal.classList.remove('active'); modal.style.display = 'none'; }
+    
+    // ریست عکس
+    editFormImageData = '';
     
     renderProducts(getCurrentFilter());
     showNotification('✅ محصول ویرایش شد');
@@ -243,43 +401,70 @@ function addProduct(e) {
         return;
     }
     
-    let image = '';
-    const fileInput = document.getElementById('itemImage');
-    
-    if (fileInput && fileInput.files && fileInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            image = e.target.result;
-            finishAddProduct(name, price, description, category, image);
-        };
-        reader.readAsDataURL(fileInput.files[0]);
-        return;
-    }
-    
-    finishAddProduct(name, price, description, category, image);
-}
-
-function finishAddProduct(name, price, description, category, image) {
     const data = getMenuData();
     
     const newItem = {
         id: generateId(),
-        name, price, description, category, image
+        name: name,
+        price: price,
+        description: description,
+        category: category,
+        image: addFormImageData  // 🆕 عکس از متغیر global
     };
     
     data[category].push(newItem);
     saveMenuData(data);
     
+    // ریست فرم
     const form = document.getElementById('addItemForm');
     if (form) form.reset();
     
+    // ریست preview عکس
     const preview = document.getElementById('imagePreview');
+    const container = document.getElementById('imageUploadContainer');
+    const input = document.getElementById('itemImage');
+    
     if (preview) {
-        preview.innerHTML = `<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.5;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>برای آپلود عکس کلیک کنید</span>`;
+        preview.innerHTML = `
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:0.5;">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <span style="opacity:0.7;">برای آپلود عکس کلیک کنید</span>
+        `;
     }
+    if (container) container.classList.remove('has-image');
+    if (input) input.value = '';
+    
+    // ریست متغیر عکس
+    addFormImageData = '';
     
     renderProducts(getCurrentFilter());
     showNotification('✅ محصول اضافه شد');
+}
+
+// =============================================
+// Export JSON
+// =============================================
+function exportToJSON() {
+    const data = getMenuData();
+    const jsonStr = JSON.stringify(data, null, 2);
+    
+    console.log('📋 محتوای menu.json:');
+    console.log(jsonStr);
+    
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'menu.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    alert('✅ فایل menu.json دانلود شد!\n\n📁 آن را در پوشه data/ جایگزین کنید\n📤 سپس روی GitHub پوش کنید');
 }
 
 // =============================================
@@ -303,7 +488,11 @@ function renderProducts(filter = 'all') {
     }
 
     if (allItems.length === 0) {
-        productsList.innerHTML = `<div style="text-align:center;padding:60px;color:#8D6E63;"><p style="font-size:1.2rem;">🚀 هیچ محصولی وجود ندارد</p><p style="font-size:0.9rem;">از فرم بالا محصول اضافه کنید</p></div>`;
+        productsList.innerHTML = `
+            <div style="text-align:center;padding:60px;color:#8D6E63;">
+                <p style="font-size:1.2rem;">🚀 هیچ محصولی وجود ندارد</p>
+                <p style="font-size:0.9rem;">از فرم بالا محصول اضافه کنید</p>
+            </div>`;
         return;
     }
 
@@ -336,7 +525,7 @@ function renderProducts(filter = 'all') {
 }
 
 // =============================================
-// Filters, Modal, Logout, etc.
+// Filters, Modal, Logout
 // =============================================
 function initFilters() {
     document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -390,7 +579,7 @@ function showNotification(message) {
 }
 
 // =============================================
-// 🆕 Add Export Button
+// Add Export Button
 // =============================================
 function addExportButton() {
     const adminActions = document.querySelector('.admin-actions');
@@ -405,28 +594,38 @@ function addExportButton() {
 }
 
 // =============================================
-// Init
+// Init Admin Panel
 // =============================================
 function initAdminPanel() {
+    // Global functions
     window.deleteProduct = deleteProduct;
     window.editProduct = editProduct;
+    window.removeEditImage = removeEditImage;
     
+    // Init image uploads
+    initAddImageUpload();
+    initEditImageUpload();
+    
+    // Forms
     const addForm = document.getElementById('addItemForm');
     if (addForm) addForm.addEventListener('submit', addProduct);
     
     const editForm = document.getElementById('editItemForm');
     if (editForm) editForm.addEventListener('submit', saveEdit);
     
+    // Init components
     renderProducts();
     initFilters();
     initModal();
     initLogout();
     addExportButton();
     
-    console.log('☕ پنل مدیریت کافه آرا');
+    console.log('☕ پنل مدیریت کافه آرا - آماده');
+    console.log('📸 آپلود عکس فعال است');
     console.log('💡 بعد از اضافه کردن محصولات، دکمه "خروجی JSON" را بزنید');
-    console.log('📁 فایل را در data/menu.json جایگزین کنید');
-    console.log('📤 سپس روی GitHub پوش کنید');
 }
 
+// =============================================
+// Start
+// =============================================
 document.addEventListener('DOMContentLoaded', initLogin);
