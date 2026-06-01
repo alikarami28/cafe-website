@@ -4,7 +4,9 @@
 
 let menuData = { hot: [], cold: [], tea: [] };
 
+// =============================================
 // لود محصولات از فایل JSON
+// =============================================
 async function loadMenuData() {
     try {
         console.log('📡 در حال لود menu.json...');
@@ -12,7 +14,6 @@ async function loadMenuData() {
         if (response.ok) {
             menuData = await response.json();
             console.log('✅ menu.json لود شد');
-            console.log('📋 محصولات:', menuData);
         } else {
             console.error('❌ خطا در لود menu.json');
         }
@@ -22,29 +23,38 @@ async function loadMenuData() {
     renderMenu();
 }
 
+// =============================================
+// فرمت قیمت
+// =============================================
 function formatPrice(price) {
     return parseInt(price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' تومان';
 }
 
+// =============================================
+// آیکون دسته‌بندی‌ها
+// =============================================
 function getCategoryIcon(category) {
     const icons = {
-        hot: `<svg width="40" height="40" viewBox="0 0 50 50"><circle cx="25" cy="25" r="22" fill="#6F4E37" opacity="0.1"/><path d="M15 35 Q15 15 25 10 Q35 15 35 35Z" fill="#6F4E37" stroke="#3E2723" stroke-width="2"/></svg>`,
+        hot: `<svg width="40" height="40" viewBox="0 0 50 50"><circle cx="25" cy="25" r="22" fill="#6F4E37" opacity="0.1"/><path d="M15 35 Q15 15 25 10 Q35 15 35 35Z" fill="#6F4E37" stroke="#3E2723" stroke-width="2"/><path d="M12 30 Q12 20 18 18" stroke="#D7CCC8" fill="none" stroke-width="2"/></svg>`,
         cold: `<svg width="40" height="40" viewBox="0 0 50 50"><circle cx="25" cy="25" r="22" fill="#4FC3F7" opacity="0.1"/><path d="M18 35 L18 15 L22 15 L22 25 L28 15 L28 35" fill="#4FC3F7" stroke="#0277BD" stroke-width="2"/></svg>`,
-        tea: `<svg width="40" height="40" viewBox="0 0 50 50"><circle cx="25" cy="25" r="22" fill="#66BB6A" opacity="0.1"/><path d="M12 35 L12 20 Q12 10 20 8 L20 12 Q15 14 15 20 L15 35Z" fill="#66BB6A" stroke="#2E7D32" stroke-width="2"/></svg>`
+        tea: `<svg width="40" height="40" viewBox="0 0 50 50"><circle cx="25" cy="25" r="22" fill="#66BB6A" opacity="0.1"/><path d="M12 35 L12 20 Q12 10 20 8 L20 12 Q15 14 15 20 L15 35Z" fill="#66BB6A" stroke="#2E7D32" stroke-width="2"/><path d="M15 28 L25 28" stroke="#2E7D32" stroke-width="2"/><path d="M15 32 L22 32" stroke="#2E7D32" stroke-width="2"/></svg>`
     };
     return icons[category] || icons.hot;
 }
 
+// =============================================
+// Escape HTML
+// =============================================
 function escapeHTML(str) {
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
 }
 
+// =============================================
+// ساخت HTML کارت محصول - عکس بالا، متن پایین
+// =============================================
 function createMenuItemHTML(item) {
-    // 🆕 لاگ برای دیباگ
-    console.log('🖼️ ایجاد کارت برای:', item.name, '| عکس:', item.image);
-    
     return `
         <div class="menu-item" data-category="${item.category}" data-id="${item.id}">
             ${item.image ? `
@@ -52,7 +62,7 @@ function createMenuItemHTML(item) {
                     <img src="${escapeHTML(item.image)}" 
                          alt="${escapeHTML(item.name)}" 
                          loading="lazy"
-                         onerror="console.error('❌ عکس لود نشد:', '${escapeHTML(item.image)}'); this.style.display='none'; this.parentElement.innerHTML='<div class=menu-item-icon>${getCategoryIcon(item.category)}</div>';">
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=menu-item-icon>${getCategoryIcon(item.category)}</div>';">
                 </div>
             ` : `
                 <div class="menu-item-icon">
@@ -70,9 +80,10 @@ function createMenuItemHTML(item) {
     `;
 }
 
+// =============================================
+// رندر منو
+// =============================================
 function renderMenu() {
-    console.log('🎨 رندر منو...');
-    
     const hotGrid = document.getElementById('hot-drinks-grid');
     if (hotGrid) {
         hotGrid.innerHTML = menuData.hot && menuData.hot.length > 0 ? 
@@ -95,6 +106,9 @@ function renderMenu() {
     }
 }
 
+// =============================================
+// Preloader
+// =============================================
 function initPreloader() {
     const preloader = document.getElementById('preloader');
     if (!preloader) return;
@@ -126,6 +140,9 @@ function hidePreloader(preloader) {
     }, 500);
 }
 
+// =============================================
+// اسکرول نرم
+// =============================================
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -138,6 +155,9 @@ function initSmoothScroll() {
     });
 }
 
+// =============================================
+// اسکرول دکمه بنر
+// =============================================
 function initBannerScroll() {
     const bannerScroll = document.querySelector('.banner-scroll');
     if (bannerScroll) {
@@ -150,6 +170,9 @@ function initBannerScroll() {
     }
 }
 
+// =============================================
+// افکت هدر
+// =============================================
 function initHeaderScroll() {
     const header = document.getElementById('header');
     if (header) {
@@ -161,6 +184,9 @@ function initHeaderScroll() {
     }
 }
 
+// =============================================
+// دکمه برگشت به بالا
+// =============================================
 function initBackToTop() {
     const backToTopBtn = document.getElementById('backToTop');
     if (!backToTopBtn) return;
@@ -185,8 +211,7 @@ function initBackToTop() {
 // Start
 // =============================================
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('🚀 شروع برنامه...');
-    console.log('📍 مسیر فعلی:', window.location.pathname);
+    console.log('🚀 کافه آرا - ARA Cafe');
     
     await loadMenuData();
     initPreloader();
@@ -197,5 +222,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     const total = (menuData.hot?.length || 0) + (menuData.cold?.length || 0) + (menuData.tea?.length || 0);
     console.log('📋 تعداد محصولات:', total);
-    console.log('✅ کافه آرا آماده است');
+    console.log('✅ سایت آماده است');
 });
