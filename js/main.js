@@ -165,6 +165,46 @@ document.addEventListener('DOMContentLoaded', async () => {
     initSmoothScroll();
     initHeaderScroll();
     initBannerScroll();
+
+        
+    // =============================================
+// Back to Top Button
+// =============================================
+function initBackToTop() {
+    const backToTopBtn = document.getElementById('backToTop');
+    if (!backToTopBtn) return;
+    
+    // نشون دادن/مخفی کردن دکمه
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 400) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+            backToTopBtn.classList.remove('pulse');
+        }
+    });
+    
+    // کلیک روی دکمه
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        
+        // انیمیشن پالس
+        this.classList.add('pulse');
+        setTimeout(() => {
+            this.classList.remove('pulse');
+        }, 500);
+    });
+}
+    document.addEventListener('DOMContentLoaded', async () => {
+    await loadMenuData();
+    initPreloader();
+    initSmoothScroll();
+    initHeaderScroll();
+    initBannerScroll();
+    initBackToTop();  // 👈 این خط رو اضافه کن
     
     console.log('☕ کافه آرا - ARA Cafe');
     const total = (menuData.hot?.length || 0) + (menuData.cold?.length || 0) + (menuData.tea?.length || 0);
