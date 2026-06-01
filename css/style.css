@@ -1219,6 +1219,76 @@ body {
     transition: opacity 0.3s ease, visibility 0.3s ease; /* 👈 سریعتر */
 }
 
+/* =============================================
+   Back to Top Button
+   ============================================= */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--primary-color);
+    color: var(--gold);
+    border: 2px solid var(--accent-color);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(62, 39, 35, 0.3);
+    font-family: inherit;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: var(--accent-color);
+    color: var(--white);
+    border-color: var(--gold);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(62, 39, 35, 0.4);
+}
+
+.back-to-top:active {
+    transform: translateY(-2px) scale(0.95);
+}
+
+/* انیمیشن پالس برای جلب توجه */
+.back-to-top.pulse {
+    animation: backToTopPulse 0.5s ease;
+}
+
+@keyframes backToTopPulse {
+    0% { box-shadow: 0 0 0 0 rgba(141, 110, 99, 0.6); }
+    70% { box-shadow: 0 0 0 15px rgba(141, 110, 99, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(141, 110, 99, 0); }
+}
+
+/* نسخه موبایل */
+@media (max-width: 768px) {
+    .back-to-top {
+        bottom: 20px;
+        left: 20px;
+        width: 44px;
+        height: 44px;
+    }
+    
+    .back-to-top svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
 .preloader.hidden {
     opacity: 0;
     visibility: hidden;
