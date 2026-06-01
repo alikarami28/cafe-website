@@ -6,7 +6,6 @@
     <meta name="robots" content="noindex, nofollow">
     <title>پنل مدیریت کافه آرا | ARA Cafe | ویرایش منو</title>
     
-    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="apple-touch-icon" href="images/logo.png">
@@ -78,9 +77,8 @@
         </header>
 
         <div class="admin-content">
-            <!-- Add New Item Form -->
             <section class="add-item-section">
-                <h3>➕ افزودن محصول جدید به منوی کافه آرا</h3>
+                <h3>➕ افزودن محصول جدید</h3>
                 <form class="add-item-form" id="addItemForm">
                     <div class="form-row">
                         <div class="form-group">
@@ -109,17 +107,11 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>تصویر محصول</label>
-                            <div class="image-upload-container" id="imageUploadContainer">
-                                <input type="file" id="itemImage" accept="image/*" class="image-input" style="display: none;">
-                                <div class="image-preview" id="imagePreview">
-                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                                        <polyline points="21 15 16 10 5 21"/>
-                                    </svg>
-                                    <span>برای آپلود عکس کلیک کنید (حداکثر ۲ مگابایت)</span>
-                                </div>
+                            <label for="itemImage">📷 مسیر عکس محصول</label>
+                            <input type="text" id="itemImage" placeholder="مثال: images/products/espresso.jpg" dir="ltr">
+                            <small style="color:#8D6E63;display:block;margin-top:4px;">عکس را در پوشه images/products/ قرار دهید</small>
+                            <div id="imagePreviewContainer" style="margin-top:12px;">
+                                <p style="color:#8D6E63;font-size:0.9rem;">📷 مسیر عکس را وارد کنید</p>
                             </div>
                         </div>
                     </div>
@@ -133,18 +125,15 @@
                 </form>
             </section>
 
-            <!-- Products List -->
             <section class="products-section">
-                <h3>📋 لیست محصولات کافه آرا</h3>
+                <h3>📋 لیست محصولات</h3>
                 <div class="products-filter">
                     <button class="filter-btn active" data-filter="all">همه</button>
-                    <button class="filter-btn" data-filter="hot">☕ نوشیدنی‌های گرم</button>
-                    <button class="filter-btn" data-filter="cold">🧊 نوشیدنی‌های سرد</button>
+                    <button class="filter-btn" data-filter="hot">☕ گرم</button>
+                    <button class="filter-btn" data-filter="cold">🧊 سرد</button>
                     <button class="filter-btn" data-filter="tea">🍵 چای و دمنوش</button>
                 </div>
-                <div class="products-list" id="productsList">
-                    <!-- محصولات با JavaScript لود می‌شوند -->
-                </div>
+                <div class="products-list" id="productsList"></div>
             </section>
         </div>
     </div>
@@ -184,19 +173,10 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>تصویر محصول</label>
-                    <div class="image-upload-container" id="editImageUploadContainer">
-                        <input type="file" id="editItemImage" accept="image/*" class="image-input" style="display: none;">
-                        <div class="image-preview" id="editImagePreview">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                <circle cx="8.5" cy="8.5" r="1.5"/>
-                                <polyline points="21 15 16 10 5 21"/>
-                            </svg>
-                            <span>برای تغییر عکس کلیک کنید</span>
-                        </div>
-                    </div>
-                    <input type="hidden" id="editItemImageData" value="">
+                    <label for="editItemImage">📷 مسیر عکس محصول</label>
+                    <input type="text" id="editItemImage" placeholder="مثال: images/products/espresso.jpg" dir="ltr">
+                    <small style="color:#8D6E63;display:block;margin-top:4px;">عکس را در پوشه images/products/ قرار دهید</small>
+                    <div id="editImagePreviewContainer" style="margin-top:12px;"></div>
                 </div>
                 <button type="submit" class="btn-save">💾 ذخیره تغییرات</button>
             </form>
