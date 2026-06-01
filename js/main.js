@@ -4,58 +4,55 @@
 
 let menuData = { hot: [], cold: [], tea: [] };
 
-// =============================================
 // لود محصولات از فایل JSON
-// =============================================
 async function loadMenuData() {
     try {
+        console.log('📡 در حال لود menu.json...');
         const response = await fetch('data/menu.json');
         if (response.ok) {
             menuData = await response.json();
+            console.log('✅ menu.json لود شد');
+            console.log('📋 محصولات:', menuData);
+        } else {
+            console.error('❌ خطا در لود menu.json');
         }
     } catch (error) {
-        console.warn('Error loading menu data, using empty menu');
+        console.error('❌ خطا:', error);
     }
     renderMenu();
 }
 
-// =============================================
-// فرمت قیمت
-// =============================================
 function formatPrice(price) {
     return parseInt(price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' تومان';
 }
 
-// =============================================
-// آیکون دسته‌بندی‌ها
-// =============================================
 function getCategoryIcon(category) {
     const icons = {
-        hot: `<svg width="40" height="40" viewBox="0 0 50 50"><circle cx="25" cy="25" r="22" fill="#6F4E37" opacity="0.1"/><path d="M15 35 Q15 15 25 10 Q35 15 35 35Z" fill="#6F4E37" stroke="#3E2723" stroke-width="2"/><path d="M12 30 Q12 20 18 18" stroke="#D7CCC8" fill="none" stroke-width="2"/></svg>`,
+        hot: `<svg width="40" height="40" viewBox="0 0 50 50"><circle cx="25" cy="25" r="22" fill="#6F4E37" opacity="0.1"/><path d="M15 35 Q15 15 25 10 Q35 15 35 35Z" fill="#6F4E37" stroke="#3E2723" stroke-width="2"/></svg>`,
         cold: `<svg width="40" height="40" viewBox="0 0 50 50"><circle cx="25" cy="25" r="22" fill="#4FC3F7" opacity="0.1"/><path d="M18 35 L18 15 L22 15 L22 25 L28 15 L28 35" fill="#4FC3F7" stroke="#0277BD" stroke-width="2"/></svg>`,
-        tea: `<svg width="40" height="40" viewBox="0 0 50 50"><circle cx="25" cy="25" r="22" fill="#66BB6A" opacity="0.1"/><path d="M12 35 L12 20 Q12 10 20 8 L20 12 Q15 14 15 20 L15 35Z" fill="#66BB6A" stroke="#2E7D32" stroke-width="2"/><path d="M15 28 L25 28" stroke="#2E7D32" stroke-width="2"/><path d="M15 32 L22 32" stroke="#2E7D32" stroke-width="2"/></svg>`
+        tea: `<svg width="40" height="40" viewBox="0 0 50 50"><circle cx="25" cy="25" r="22" fill="#66BB6A" opacity="0.1"/><path d="M12 35 L12 20 Q12 10 20 8 L20 12 Q15 14 15 20 L15 35Z" fill="#66BB6A" stroke="#2E7D32" stroke-width="2"/></svg>`
     };
     return icons[category] || icons.hot;
 }
 
-// =============================================
-// Escape HTML
-// =============================================
 function escapeHTML(str) {
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
 }
 
-// =============================================
-// ساخت HTML کارت محصول
-// =============================================
 function createMenuItemHTML(item) {
+    // 🆕 لاگ برای دیباگ
+    console.log('🖼️ ایجاد کارت برای:', item.name, '| عکس:', item.image);
+    
     return `
         <div class="menu-item" data-category="${item.category}" data-id="${item.id}">
             ${item.image ? `
                 <div class="menu-item-image">
-                    <img src="${escapeHTML(item.image)}" alt="${escapeHTML(item.name)}" loading="lazy">
+                    <img src="${escapeHTML(item.image)}" 
+                         alt="${escapeHTML(item.name)}" 
+                         loading="lazy"
+                         onerror="console.error('❌ عکس لود نشد:', '${escapeHTML(item.image)}'); this.style.display='none'; this.parentElement.innerHTML='<div class=menu-item-icon>${getCategoryIcon(item.category)}</div>';">
                 </div>
             ` : `
                 <div class="menu-item-icon">
@@ -73,11 +70,9 @@ function createMenuItemHTML(item) {
     `;
 }
 
-// =============================================
-// رندر منو
-// =============================================
 function renderMenu() {
-    // نوشیدنی‌های گرم
+    console.log('🎨 رندر منو...');
+    
     const hotGrid = document.getElementById('hot-drinks-grid');
     if (hotGrid) {
         hotGrid.innerHTML = menuData.hot && menuData.hot.length > 0 ? 
@@ -85,7 +80,6 @@ function renderMenu() {
             '<p class="empty-state">☕ به زودی...</p>';
     }
     
-    // نوشیدنی‌های سرد
     const coldGrid = document.getElementById('cold-drinks-grid');
     if (coldGrid) {
         coldGrid.innerHTML = menuData.cold && menuData.cold.length > 0 ? 
@@ -93,7 +87,6 @@ function renderMenu() {
             '<p class="empty-state">🧊 به زودی...</p>';
     }
     
-    // چای و دمنوش
     const teaGrid = document.getElementById('tea-drinks-grid');
     if (teaGrid) {
         teaGrid.innerHTML = menuData.tea && menuData.tea.length > 0 ? 
@@ -102,19 +95,14 @@ function renderMenu() {
     }
 }
 
-// =============================================
-// Preloader
-// =============================================
 function initPreloader() {
     const preloader = document.getElementById('preloader');
     if (!preloader) return;
     
-    // مخفی کردن اجباری بعد از ۳ ثانیه
     const forceHideTimeout = setTimeout(() => {
         hidePreloader(preloader);
     }, 3000);
     
-    // مخفی کردن هنگام لود کامل صفحه
     window.addEventListener('load', () => {
         clearTimeout(forceHideTimeout);
         setTimeout(() => {
@@ -122,7 +110,6 @@ function initPreloader() {
         }, 500);
     });
     
-    // Fallback: مخفی کردن هنگام آماده شدن DOM
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
         clearTimeout(forceHideTimeout);
         setTimeout(() => {
@@ -133,16 +120,12 @@ function initPreloader() {
 
 function hidePreloader(preloader) {
     if (!preloader || preloader.classList.contains('hidden')) return;
-    
     preloader.classList.add('hidden');
     setTimeout(() => {
         preloader.style.display = 'none';
     }, 500);
 }
 
-// =============================================
-// اسکرول نرم لینک‌های ناوبری
-// =============================================
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -155,9 +138,6 @@ function initSmoothScroll() {
     });
 }
 
-// =============================================
-// اسکرول دکمه بنر
-// =============================================
 function initBannerScroll() {
     const bannerScroll = document.querySelector('.banner-scroll');
     if (bannerScroll) {
@@ -170,9 +150,6 @@ function initBannerScroll() {
     }
 }
 
-// =============================================
-// افکت اسکرول هدر
-// =============================================
 function initHeaderScroll() {
     const header = document.getElementById('header');
     if (header) {
@@ -184,14 +161,10 @@ function initHeaderScroll() {
     }
 }
 
-// =============================================
-// دکمه برگشت به بالا
-// =============================================
 function initBackToTop() {
     const backToTopBtn = document.getElementById('backToTop');
     if (!backToTopBtn) return;
     
-    // نشون دادن/مخفی کردن دکمه هنگام اسکرول
     window.addEventListener('scroll', function() {
         if (window.scrollY > 400) {
             backToTopBtn.classList.add('visible');
@@ -201,38 +174,28 @@ function initBackToTop() {
         }
     });
     
-    // کلیک روی دکمه - برگشت به بالا
     backToTopBtn.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-        
-        // انیمیشن پالس
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         this.classList.add('pulse');
-        setTimeout(() => {
-            this.classList.remove('pulse');
-        }, 500);
+        setTimeout(() => { this.classList.remove('pulse'); }, 500);
     });
 }
 
 // =============================================
-// راه‌اندازی برنامه
+// Start
 // =============================================
 document.addEventListener('DOMContentLoaded', async () => {
-    // لود منو
-    await loadMenuData();
+    console.log('🚀 شروع برنامه...');
+    console.log('📍 مسیر فعلی:', window.location.pathname);
     
-    // راه‌اندازی ماژول‌ها
+    await loadMenuData();
     initPreloader();
     initSmoothScroll();
     initHeaderScroll();
     initBannerScroll();
     initBackToTop();
     
-    // لاگ در کنسول
-    console.log('☕ کافه آرا - ARA Cafe');
     const total = (menuData.hot?.length || 0) + (menuData.cold?.length || 0) + (menuData.tea?.length || 0);
     console.log('📋 تعداد محصولات:', total);
-    console.log('🚀 سایت با موفقیت بارگذاری شد');
+    console.log('✅ کافه آرا آماده است');
 });
