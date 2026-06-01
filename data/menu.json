@@ -1,38 +1,6 @@
 {
   "hot": [
     {
-      "id": "id_1780313190895_8740",
-      "name": "کاپوچینو",
-      "price": 235000,
-      "description": "اسپرسو با فوم شیر، متعادل و خوش‌عطر.",
-      "category": "hot",
-      "image": ""
-    },
-    {
-      "id": "id_1780313204729_1441",
-      "name": "موکا",
-      "price": 235000,
-      "description": "ترکیب اسپرسو، شیر و شکلات با طعمی شیرین.",
-      "category": "hot",
-      "image": ""
-    },
-    {
-      "id": "id_1780313244792_8211",
-      "name": "کارامل لاته",
-      "price": 240000,
-      "description": "لاته با سس کارامل، شیرین و خوش‌عطر.",
-      "category": "hot",
-      "image": ""
-    },
-    {
-      "id": "id_1780313262574_2324",
-      "name": "وانیل لاته",
-      "price": 245000,
-      "description": "لاته با عطر وانیل، ملایم و دلنشین.",
-      "category": "hot",
-      "image": ""
-    },
-    {
       "id": "id_1780313099146_2285",
       "name": "آمریکانو",
       "price": 165000,
@@ -65,20 +33,36 @@
       "image": ""
     },
     {
-      "id": "id_1780349430211_8147",
-      "name": "تست",
-      "price": 1,
-      "description": "تست",
+      "id": "id_1780313190895_8740",
+      "name": "کاپوچینو",
+      "price": 235000,
+      "description": "اسپرسو با فوم شیر، متعادل و خوش‌عطر.",
       "category": "hot",
-      "image": ""
+      "image": "images/products/Cappuccino.jpg"
     },
     {
-      "id": "id_1780349954300_5756",
-      "name": "A",
-      "price": 1,
-      "description": "1",
+      "id": "id_1780313204729_1441",
+      "name": "موکا",
+      "price": 235000,
+      "description": "ترکیب اسپرسو، شیر و شکلات با طعمی شیرین.",
       "category": "hot",
-      "image": "images/products/ClassicBlackTea.jpg"
+      "image": "images/products/Mocha.jpg"
+    },
+    {
+      "id": "id_1780313244792_8211",
+      "name": "کارامل لاته",
+      "price": 240000,
+      "description": "لاته با سس کارامل، شیرین و خوش‌عطر.",
+      "category": "hot",
+      "image": "images/products/CaramelLatte.jpg"
+    },
+    {
+      "id": "id_1780313262574_2324",
+      "name": "وانیل لاته",
+      "price": 245000,
+      "description": "لاته با عطر وانیل، ملایم و دلنشین.",
+      "category": "hot",
+      "image": "images/products/VanillaLatte.jpg"
     }
   ],
   "cold": [
@@ -87,14 +71,6 @@
       "name": "آیس آمریکانو",
       "price": 180000,
       "description": "اسپرسو با آب سرد و یخ، ساده و انرژی‌بخش.",
-      "category": "cold",
-      "image": ""
-    },
-    {
-      "id": "id_1780313358248_2888",
-      "name": "آیس لاته",
-      "price": 225000,
-      "description": "اسپرسو با شیر سرد و یخ، خنک و سبک.",
       "category": "cold",
       "image": ""
     },
@@ -129,6 +105,14 @@
       "description": "نوشیدنی یخی ترکیبی با بافتی کرمی و غلیظ.",
       "category": "cold",
       "image": ""
+    },
+    {
+      "id": "id_1780313358248_2888",
+      "name": "آیس لاته",
+      "price": 225000,
+      "description": "اسپرسو با شیر سرد و یخ، خنک و سبک.",
+      "category": "cold",
+      "image": "images/products/IcedLatte.jpg"
     }
   ],
   "tea": [
