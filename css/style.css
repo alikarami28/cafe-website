@@ -449,7 +449,7 @@ body {
 }
 
 /* =============================================
-   Menu Grid - کارت عمودی: عکس بالا، متن پایین
+   Menu Grid - دسکتاپ: عکس بالا / موبایل: عکس راست
    ============================================= */
 .menu-grid {
     display: grid;
@@ -466,7 +466,7 @@ body {
     position: relative;
     overflow: hidden;
     display: flex;
-    flex-direction: column;
+    flex-direction: column;  /* پیش‌فرض: عمودی (عکس بالا) */
 }
 
 .menu-item:hover {
@@ -1131,7 +1131,7 @@ body {
 }
 
 /* =============================================
-   Responsive Design
+   📱 Responsive Design - موبایل
    ============================================= */
 @media (max-width: 768px) {
     .nav {
@@ -1177,13 +1177,53 @@ body {
         padding: 40px 1rem;
     }
     
+    /* 🆕 موبایل: ۱ ستون، عکس راست، متن چپ */
     .menu-grid {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 20px;
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .menu-item {
+        flex-direction: row !important;  /* افقی: عکس کنار متن */
+        align-items: center;
+        gap: 16px;
+        padding: 16px;
+    }
+    
+    .menu-item-image {
+        width: 100px;
+        height: 130px;
+        aspect-ratio: auto;
+        border-radius: 12px;
+        flex-shrink: 0;
+    }
+    
+    .menu-item-image img {
+        border-radius: 12px;
+    }
+    
+    .menu-item-icon {
+        width: 100px;
+        height: 130px;
+        aspect-ratio: auto;
+        border-radius: 12px;
+        flex-shrink: 0;
+    }
+    
+    .menu-item-icon svg {
+        width: 40px;
+        height: 40px;
     }
     
     .item-content {
-        padding: 16px;
+        padding: 0;
+        gap: 8px;
+        flex: 1;
+    }
+    
+    .item-header {
+        flex-direction: column;
+        gap: 6px;
     }
     
     .item-name {
@@ -1191,8 +1231,27 @@ body {
     }
     
     .item-price {
-        font-size: 1rem;
-        padding: 4px 12px;
+        font-size: 0.95rem;
+        padding: 4px 10px;
+        align-self: flex-start;
+    }
+    
+    .item-description {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    /* نوار رنگی از بالا به راست */
+    .menu-item::before {
+        width: 4px;
+        height: 100%;
+        top: 0;
+        left: auto;
+        right: 0;
+    }
+    
+    .menu-item:hover {
+        transform: translateY(-4px);
     }
     
     .footer-content {
@@ -1240,13 +1299,14 @@ body {
         font-size: 1.5rem;
     }
     
-    .menu-grid {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 16px;
+    .menu-item-image {
+        width: 80px;
+        height: 110px;
     }
     
-    .item-content {
-        padding: 12px;
+    .menu-item-icon {
+        width: 80px;
+        height: 110px;
     }
     
     .item-name {
@@ -1254,12 +1314,12 @@ body {
     }
     
     .item-price {
-        font-size: 0.9rem;
-        padding: 4px 10px;
+        font-size: 0.85rem;
+        padding: 3px 8px;
     }
     
     .item-description {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
     
     .admin-content {
