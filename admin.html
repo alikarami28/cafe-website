@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>پنل مدیریت کافه آرا | ARA Cafe | ویرایش منو</title>
+    <title>پنل مدیریت کافه آرا | ARA Cafe</title>
     
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
-    <link rel="apple-touch-icon" href="images/logo.png">
     
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="admin-body">
-    <!-- Login Screen -->
     <div class="login-screen" id="loginScreen">
         <div class="login-box">
             <div class="login-coffee">
@@ -27,52 +25,33 @@
             <form class="login-form" id="loginForm">
                 <div class="form-group">
                     <label for="username">نام کاربری</label>
-                    <input type="text" id="username" placeholder="نام کاربری" required autocomplete="username">
+                    <input type="text" id="username" placeholder="نام کاربری" required>
                 </div>
                 <div class="form-group">
                     <label for="password">رمز عبور</label>
-                    <input type="password" id="password" placeholder="رمز عبور" required autocomplete="current-password">
+                    <input type="password" id="password" placeholder="رمز عبور" required>
                 </div>
                 <div class="login-error" id="loginError"></div>
                 <button type="submit" class="login-btn">
-                    <span class="btn-text">ورود به پنل</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 18l6-6-6-6"/>
-                    </svg>
+                    <span>ورود به پنل</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- Admin Panel -->
     <div class="admin-panel" id="adminPanel" style="display: none;">
         <header class="admin-header">
             <div class="admin-logo">
-                <svg width="30" height="30" viewBox="0 0 40 40">
-                    <circle cx="20" cy="20" r="18" fill="#3E2723" stroke="#8D6E63" stroke-width="2"/>
-                    <text x="20" y="27" text-anchor="middle" fill="#D7CCC8" font-size="20">☕</text>
-                </svg>
+                <span>☕</span>
                 <div>
                     <h2>پنل مدیریت منو</h2>
-                    <span style="font-size: 0.8rem; color: #8D6E63;">کافه آرا - ARA Cafe</span>
+                    <span style="font-size:0.8rem;color:#8D6E63;">کافه آرا - ARA Cafe</span>
                 </div>
             </div>
             <div class="admin-actions">
-                <a href="index.html" class="btn-preview" target="_blank">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                        <circle cx="12" cy="12" r="3"/>
-                    </svg>
-                    پیش‌نمایش سایت
-                </a>
-                <button class="btn-logout" id="logoutBtn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
-                        <polyline points="16 17 21 12 16 7"/>
-                        <line x1="21" y1="12" x2="9" y2="12"/>
-                    </svg>
-                    خروج
-                </button>
+                <a href="index.html" class="btn-preview" target="_blank">🔍 پیش‌نمایش</a>
+                <button class="btn-logout" id="logoutBtn">🚪 خروج</button>
             </div>
         </header>
 
@@ -83,45 +62,41 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="itemName">نام محصول *</label>
-                            <input type="text" id="itemName" placeholder="مثال: اسپرسو" required>
+                            <input type="text" id="itemName" placeholder="نام محصول" required>
                         </div>
                         <div class="form-group">
                             <label for="itemPrice">قیمت (تومان) *</label>
-                            <input type="number" id="itemPrice" placeholder="مثال: ۴۵۰۰۰" required>
+                            <input type="number" id="itemPrice" placeholder="قیمت" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="itemCategory">دسته‌بندی *</label>
+                            <select id="itemCategory" required>
+                                <option value="">انتخاب کنید</option>
+                                <option value="hot">☕ نوشیدنی گرم</option>
+                                <option value="cold">🧊 نوشیدنی سرد</option>
+                                <option value="tea">🍵 چای و دمنوش</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="itemOrder">ترتیب نمایش (عدد)</label>
+                            <input type="number" id="itemOrder" placeholder="1" value="1" min="1">
+                            <small style="color:#8D6E63;">عدد کمتر = نمایش زودتر</small>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="itemDescription">توضیحات</label>
-                            <textarea id="itemDescription" rows="3" placeholder="توضیحات محصول..."></textarea>
+                            <textarea id="itemDescription" rows="3" placeholder="توضیحات"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="itemCategory">دسته‌بندی *</label>
-                            <select id="itemCategory" required>
-                                <option value="">انتخاب کنید...</option>
-                                <option value="hot">☕ نوشیدنی‌های گرم</option>
-                                <option value="cold">🧊 نوشیدنی‌های سرد</option>
-                                <option value="tea">🍵 چای و دمنوش</option>
-                            </select>
+                            <label for="itemImage">📷 مسیر عکس</label>
+                            <input type="text" id="itemImage" placeholder="images/products/name.jpg" dir="ltr">
+                            <div id="imagePreviewContainer" style="margin-top:8px;"></div>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="itemImage">📷 مسیر عکس محصول</label>
-                            <input type="text" id="itemImage" placeholder="مثال: images/products/espresso.jpg" dir="ltr">
-                            <small style="color:#8D6E63;display:block;margin-top:4px;">عکس را در پوشه images/products/ قرار دهید</small>
-                            <div id="imagePreviewContainer" style="margin-top:12px;">
-                                <p style="color:#8D6E63;font-size:0.9rem;">📷 مسیر عکس را وارد کنید</p>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-add">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="12" y1="5" x2="12" y2="19"/>
-                            <line x1="5" y1="12" x2="19" y2="12"/>
-                        </svg>
-                        افزودن محصول
-                    </button>
+                    <button type="submit" class="btn-add">➕ افزودن محصول</button>
                 </form>
             </section>
 
@@ -134,21 +109,17 @@
                     <button class="filter-btn" data-filter="tea">🍵 چای و دمنوش</button>
                 </div>
                 <div class="products-list" id="productsList"></div>
+                <button onclick="moveUp()" style="margin-top:12px;padding:8px 16px;background:#4FC3F7;color:#fff;border:none;border-radius:8px;cursor:pointer;">⬆️ انتقال به بالا</button>
+                <button onclick="moveDown()" style="margin:12px 8px 0;padding:8px 16px;background:#FF9800;color:#fff;border:none;border-radius:8px;cursor:pointer;">⬇️ انتقال به پایین</button>
             </section>
         </div>
     </div>
 
-    <!-- Edit Modal -->
     <div class="modal" id="editModal">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>✏️ ویرایش محصول</h3>
-                <button class="modal-close" id="modalClose">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="18" y1="6" x2="6" y2="18"/>
-                        <line x1="6" y1="6" x2="18" y2="18"/>
-                    </svg>
-                </button>
+                <button class="modal-close" id="modalClose">✕</button>
             </div>
             <form class="edit-item-form" id="editItemForm">
                 <input type="hidden" id="editItemId">
@@ -161,24 +132,26 @@
                     <input type="number" id="editItemPrice" required>
                 </div>
                 <div class="form-group">
-                    <label for="editItemDescription">توضیحات</label>
-                    <textarea id="editItemDescription" rows="3"></textarea>
-                </div>
-                <div class="form-group">
                     <label for="editItemCategory">دسته‌بندی *</label>
                     <select id="editItemCategory" required>
-                        <option value="hot">☕ نوشیدنی‌های گرم</option>
-                        <option value="cold">🧊 نوشیدنی‌های سرد</option>
+                        <option value="hot">☕ نوشیدنی گرم</option>
+                        <option value="cold">🧊 نوشیدنی سرد</option>
                         <option value="tea">🍵 چای و دمنوش</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="editItemImage">📷 مسیر عکس محصول</label>
-                    <input type="text" id="editItemImage" placeholder="مثال: images/products/espresso.jpg" dir="ltr">
-                    <small style="color:#8D6E63;display:block;margin-top:4px;">عکس را در پوشه images/products/ قرار دهید</small>
-                    <div id="editImagePreviewContainer" style="margin-top:12px;"></div>
+                    <label for="editItemOrder">ترتیب نمایش</label>
+                    <input type="number" id="editItemOrder" min="1">
                 </div>
-                <button type="submit" class="btn-save">💾 ذخیره تغییرات</button>
+                <div class="form-group">
+                    <label for="editItemDescription">توضیحات</label>
+                    <textarea id="editItemDescription" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editItemImage">📷 مسیر عکس</label>
+                    <input type="text" id="editItemImage" dir="ltr">
+                </div>
+                <button type="submit" class="btn-save">💾 ذخیره</button>
             </form>
         </div>
     </div>
