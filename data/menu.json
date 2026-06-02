@@ -1,38 +1,6 @@
 {
   "hot": [
     {
-      "id": "id_1780313099146_2285",
-      "name": "آمریکانو",
-      "price": 165000,
-      "description": "اسپرسو رقیق‌شده با آب داغ، سبک و متعادل.",
-      "category": "hot",
-      "image": ""
-    },
-    {
-      "id": "id_1780312684378_8806",
-      "name": "اسپرسو سینگل",
-      "price": 135000,
-      "description": "شات خالص قهوه با طعمی قوی و عطر غلیظ.",
-      "category": "hot",
-      "image": ""
-    },
-    {
-      "id": "id_1780312738653_2563",
-      "name": "اسپرسو دبل",
-      "price": 155000,
-      "description": "دو شات اسپرسو با طعمی عمیق و انرژی بیشتر.",
-      "category": "hot",
-      "image": ""
-    },
-    {
-      "id": "id_1780313155544_9033",
-      "name": "لاته",
-      "price": 230000,
-      "description": "اسپرسو با شیر بخار داده شده و طعم نرم و کرمی.",
-      "category": "hot",
-      "image": ""
-    },
-    {
       "id": "id_1780313190895_8740",
       "name": "کاپوچینو",
       "price": 235000,
@@ -63,49 +31,41 @@
       "description": "لاته با عطر وانیل، ملایم و دلنشین.",
       "category": "hot",
       "image": "images/products/VanillaLatte.jpg"
+    },
+    {
+      "id": "id_1780313099146_2285",
+      "name": "آمریکانو",
+      "price": 165000,
+      "description": "اسپرسو رقیق‌شده با آب داغ، سبک و متعادل.",
+      "category": "hot",
+      "image": "images/products/Americano.jpg"
+    },
+    {
+      "id": "id_1780312684378_8806",
+      "name": "اسپرسو سینگل",
+      "price": 135000,
+      "description": "شات خالص قهوه با طعمی قوی و عطر غلیظ.",
+      "category": "hot",
+      "image": "images/products/Espresso.jpg"
+    },
+    {
+      "id": "id_1780312738653_2563",
+      "name": "اسپرسو دبل",
+      "price": 155000,
+      "description": "دو شات اسپرسو با طعمی عمیق و انرژی بیشتر.",
+      "category": "hot",
+      "image": "images/products/DoubleEspresso.jpg"
+    },
+    {
+      "id": "id_1780313155544_9033",
+      "name": "لاته",
+      "price": 230000,
+      "description": "اسپرسو با شیر بخار داده شده و طعم نرم و کرمی.",
+      "category": "hot",
+      "image": "images/products/Latte.jpg"
     }
   ],
   "cold": [
-    {
-      "id": "id_1780313329126_3267",
-      "name": "آیس آمریکانو",
-      "price": 180000,
-      "description": "اسپرسو با آب سرد و یخ، ساده و انرژی‌بخش.",
-      "category": "cold",
-      "image": ""
-    },
-    {
-      "id": "id_1780313382633_6938",
-      "name": "آیس موکا",
-      "price": 245000,
-      "description": "اسپرسو با شیر و شکلات سرد، شیرین و خنک.",
-      "category": "cold",
-      "image": ""
-    },
-    {
-      "id": "id_1780313417650_9033",
-      "name": "کولد برو",
-      "price": 220000,
-      "description": "قهوه دم‌سرد با طعمی ملایم و کم‌اسید.",
-      "category": "cold",
-      "image": ""
-    },
-    {
-      "id": "id_1780313442835_167",
-      "name": "اسپرسو تونیک",
-      "price": 235000,
-      "description": "اسپرسو با تونیک خنک، گازدار و متفاوت.",
-      "category": "cold",
-      "image": ""
-    },
-    {
-      "id": "id_1780313465671_607",
-      "name": "فراپاچینو",
-      "price": 245000,
-      "description": "نوشیدنی یخی ترکیبی با بافتی کرمی و غلیظ.",
-      "category": "cold",
-      "image": ""
-    },
     {
       "id": "id_1780313358248_2888",
       "name": "آیس لاته",
@@ -113,6 +73,46 @@
       "description": "اسپرسو با شیر سرد و یخ، خنک و سبک.",
       "category": "cold",
       "image": "images/products/IcedLatte.jpg"
+    },
+    {
+      "id": "id_1780313329126_3267",
+      "name": "آیس آمریکانو",
+      "price": 180000,
+      "description": "اسپرسو با آب سرد و یخ، ساده و انرژی‌بخش.",
+      "category": "cold",
+      "image": "images/products/IcedAmericano.jpg"
+    },
+    {
+      "id": "id_1780313382633_6938",
+      "name": "آیس موکا",
+      "price": 245000,
+      "description": "اسپرسو با شیر و شکلات سرد، شیرین و خنک.",
+      "category": "cold",
+      "image": "images/products/IcedMocha.jpg"
+    },
+    {
+      "id": "id_1780313417650_9033",
+      "name": "کولد برو",
+      "price": 220000,
+      "description": "قهوه دم‌سرد با طعمی ملایم و کم‌اسید.",
+      "category": "cold",
+      "image": "images/products/ColdBrew.jpg"
+    },
+    {
+      "id": "id_1780313442835_167",
+      "name": "اسپرسو تونیک",
+      "price": 235000,
+      "description": "اسپرسو با تونیک خنک، گازدار و متفاوت.",
+      "category": "cold",
+      "image": "images/products/EspressoTonic.jpg"
+    },
+    {
+      "id": "id_1780313465671_607",
+      "name": "فراپاچینو",
+      "price": 245000,
+      "description": "نوشیدنی یخی ترکیبی با بافتی کرمی و غلیظ.",
+      "category": "cold",
+      "image": "images/products/Frappuccino.jpg"
     }
   ],
   "tea": [
@@ -122,7 +122,7 @@
       "price": 45000,
       "description": "چای ساده و معطر، مناسب مصرف روزانه.",
       "category": "tea",
-      "image": ""
+      "image": "images/products/ClassicBlackTea.jpg"
     },
     {
       "id": "id_1780320929741_2808",
@@ -130,7 +130,7 @@
       "price": 65000,
       "description": "چای سبک با طعمی ملایم و خواص آنتی‌اکسیدانی.",
       "category": "tea",
-      "image": ""
+      "image": "images/products/GreenTea.jpg"
     },
     {
       "id": "id_1780320953514_7534",
@@ -138,7 +138,7 @@
       "price": 110000,
       "description": "چای ادویه‌دار با طعمی گرم و معطر.",
       "category": "tea",
-      "image": ""
+      "image": "images/products/MasalaChai.jpg"
     },
     {
       "id": "id_1780321003480_7758",
@@ -146,7 +146,7 @@
       "price": 225000,
       "description": "چای سبز ژاپنی با شیر، ملایم و سالم.",
       "category": "tea",
-      "image": ""
+      "image": "images/products/MatchaLatte.jpg"
     },
     {
       "id": "id_1780321029646_5069",
@@ -154,15 +154,7 @@
       "price": 215000,
       "description": "چای شیرین و غلیظ با طعمی کرمی و ادویه‌ای.",
       "category": "tea",
-      "image": ""
-    },
-    {
-      "id": "id_1780348465792_2335",
-      "name": "چای سیاه",
-      "price": 50000,
-      "description": "چای دمی",
-      "category": "tea",
-      "image": ""
+      "image": "images/products/KarakTea.jpg"
     }
   ]
 }
