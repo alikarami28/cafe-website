@@ -1,5 +1,179 @@
 {
-  "hot": [],
-  "cold": [],
-  "tea": []
+  "hot": [
+    {
+      "id": "id_1780433906036_2162",
+      "name": "اسپرسو سینگل",
+      "price": 1,
+      "description": "شات خالص قهوه با طعمی قوی و عطر غلیظ.",
+      "category": "hot",
+      "order": 1,
+      "image": "images/products/Espresso.jpg"
+    },
+    {
+      "id": "id_1780433999498_6048",
+      "name": "دبل اسپرسو",
+      "price": 1,
+      "description": "دو شات اسپرسو با طعمی عمیق و انرژی بیشتر.",
+      "category": "hot",
+      "order": 2,
+      "image": "images/products/DoubleEspresso.jpg"
+    },
+    {
+      "id": "id_1780434053401_1445",
+      "name": "آمریکانو",
+      "price": 1,
+      "description": "اسپرسو رقیق‌شده با آب داغ، سبک و متعادل.",
+      "category": "hot",
+      "order": 3,
+      "image": "images/products/Americano.jpg"
+    },
+    {
+      "id": "id_1780434117053_4920",
+      "name": "لاته",
+      "price": 1,
+      "description": "اسپرسو با شیر بخار داده شده و طعم نرم و کرمی.",
+      "category": "hot",
+      "order": 4,
+      "image": "images/products/Latte.jpg"
+    },
+    {
+      "id": "id_1780434164555_9368",
+      "name": "کاپوچینو",
+      "price": 1,
+      "description": "اسپرسو با فوم شیر، متعادل و خوش‌عطر.",
+      "category": "hot",
+      "order": 5,
+      "image": "images/products/Cappuccino.jpg"
+    },
+    {
+      "id": "id_1780434218834_314",
+      "name": "موکا",
+      "price": 1,
+      "description": "ترکیب اسپرسو، شیر و شکلات با طعمی شیرین.",
+      "category": "hot",
+      "order": 6,
+      "image": "images/products/Mocha.jpg"
+    },
+    {
+      "id": "id_1780434278955_3365",
+      "name": "کارامل لاته",
+      "price": 1,
+      "description": "لاته با سس کارامل، شیرین و خوش‌عطر.",
+      "category": "hot",
+      "order": 7,
+      "image": "images/products/CaramelLatte.jpg"
+    },
+    {
+      "id": "id_1780434499254_6888",
+      "name": "وانیل لاته",
+      "price": 1,
+      "description": "لاته با عطر وانیل، ملایم و دلنشین.",
+      "category": "hot",
+      "order": 8,
+      "image": "images/products/VanillaLatte.jpg"
+    }
+  ],
+  "cold": [
+    {
+      "id": "id_1780434593929_203",
+      "name": "آیس لاته",
+      "price": 1,
+      "description": "اسپرسو با شیر سرد و یخ، خنک و سبک.",
+      "category": "cold",
+      "order": 1,
+      "image": "images/products/IcedLatte.jpg"
+    },
+    {
+      "id": "id_1780434655638_8957",
+      "name": "آیس آمریکانو",
+      "price": 1,
+      "description": "اسپرسو با آب سرد و یخ، ساده و انرژی‌بخش.",
+      "category": "cold",
+      "order": 2,
+      "image": "images/products/IcedAmericano.jpg"
+    },
+    {
+      "id": "id_1780434707424_7880",
+      "name": "آیس موکا",
+      "price": 1,
+      "description": "اسپرسو با شیر و شکلات سرد، شیرین و خنک.",
+      "category": "cold",
+      "order": 3,
+      "image": "images/products/IcedMocha.jpg"
+    },
+    {
+      "id": "id_1780434782366_445",
+      "name": "اسپرسو تونیک",
+      "price": 1,
+      "description": "اسپرسو با تونیک خنک، گازدار و متفاوت.",
+      "category": "cold",
+      "order": 4,
+      "image": "images/products/EspressoTonic.jpg"
+    },
+    {
+      "id": "id_1780434822134_1473",
+      "name": "کولد برو",
+      "price": 1,
+      "description": "قهوه دم‌سرد با طعمی ملایم و کم‌اسید.",
+      "category": "cold",
+      "order": 5,
+      "image": "images/products/ColdBrew.jpg"
+    },
+    {
+      "id": "id_1780434861448_3685",
+      "name": "فراپاچینو",
+      "price": 1,
+      "description": "نوشیدنی یخی ترکیبی با بافتی کرمی و غلیظ.",
+      "category": "cold",
+      "order": 6,
+      "image": "images/products/Frappuccino.jpg"
+    }
+  ],
+  "tea": [
+    {
+      "id": "id_1780434910655_1764",
+      "name": "چای سیاه کلاسیک",
+      "price": 1,
+      "description": "چای ساده و معطر، مناسب مصرف روزانه.",
+      "category": "tea",
+      "order": 1,
+      "image": "images/products/ClassicBlackTea.jpg"
+    },
+    {
+      "id": "id_1780434946304_3920",
+      "name": "چای سبز",
+      "price": 1,
+      "description": "چای سبک با طعمی ملایم و خواص آنتی‌اکسیدانی.",
+      "category": "tea",
+      "order": 2,
+      "image": "images/products/GreenTea.jpg"
+    },
+    {
+      "id": "id_1780434986622_7822",
+      "name": "چای ماسالا",
+      "price": 1,
+      "description": "چای ادویه‌دار با طعمی گرم و معطر.",
+      "category": "tea",
+      "order": 3,
+      "image": "images/products/MasalaChai.jpg"
+    },
+    {
+      "id": "id_1780435034404_4017",
+      "name": "ماچا لاته",
+      "price": 1,
+      "description": "چای سبز ژاپنی با شیر، ملایم و سالم.",
+      "category": "tea",
+      "order": 4,
+      "image": "images/products/MatchaLatte.jpg"
+    },
+    {
+      "id": "id_1780435084862_1504",
+      "name": "چای کرک",
+      "price": 1,
+      "description": "چای شیرین و غلیظ با طعمی کرمی و ادویه‌ای.",
+      "category": "tea",
+      "order": 5,
+      "image": "images/products/KarakTea.jpg"
+    }
+  ]
 }
