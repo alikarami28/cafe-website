@@ -35,21 +35,31 @@ function escapeHTML(str) {
     return div.innerHTML;
 }
 
+// =============================================
+// 🆕 ساخت کارت محصول - ساده و تمیز
+// =============================================
 function createMenuItemHTML(item) {
+    let imageHTML = '';
+    
+    if (item.image && item.image.trim() !== '') {
+        // عکس داره - فقط تگ img ساده
+        imageHTML = `
+            <div class="menu-item-image">
+                <img src="${escapeHTML(item.image)}" 
+                     alt="${escapeHTML(item.name)}" 
+                     loading="lazy">
+            </div>`;
+    } else {
+        // عکس نداره - آیکون پیش‌فرض
+        imageHTML = `
+            <div class="menu-item-icon">
+                ${getCategoryIcon(item.category)}
+            </div>`;
+    }
+    
     return `
         <div class="menu-item" data-category="${item.category}" data-id="${item.id}">
-            ${item.image ? `
-                <div class="menu-item-image">
-                    <img src="${escapeHTML(item.image)}" 
-                         alt="${escapeHTML(item.name)}" 
-                         loading="lazy"
-                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=menu-item-icon>${getCategoryIcon(item.category)}</div>';">
-                </div>
-            ` : `
-                <div class="menu-item-icon">
-                    ${getCategoryIcon(item.category)}
-                </div>
-            `}
+            ${imageHTML}
             <div class="item-content">
                 <div class="item-header">
                     <h3 class="item-name">${escapeHTML(item.name)}</h3>
