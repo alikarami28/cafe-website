@@ -1,7 +1,29 @@
+// =============================================
+// Order System - کافه آرا ARA Cafe
+// =============================================
+
 let menuData = { hot: [], cold: [], tea: [] };
 let selectedItems = [];
 
-// لود منو
+// =============================================
+// فال‌های حافظ
+// =============================================
+const hafezFal = [
+    "مژده ای دل که دگر باره بهار آمده است | از پی هر نفسش بوی نگار آمده است",
+    "یوسف گم‌گشته بازآید به کنعان غم مخور | کلبه احزان شود روزی گلستان غم مخور",
+    "در ازل پرتو حسنت ز تجلی دم زد | عشق پیدا شد و آتش به همه عالم زد",
+    "الا یا ایها الساقی ادر کأساً و ناولها | که عشق آسان نمود اول ولی افتاد مشکل‌ها",
+    "دوش وقت سحر از غصه نجاتم دادند | واندر آن ظلمت شب آب حیاتم دادند",
+    "صبح است و ژاله می‌چکد از ابر بهمنی | برگ صبوح ساز و بده جام یک منی",
+    "بلبلی خون دلی خورد و گلی حاصل کرد | باد غیرت به صدش خار پریشان کرد و برفت",
+    "سحرگه رهروی در سرزمینی | همی گفت این معما با قرینی",
+    "هرگز از دور زمان ننالم و نگریزم | کاین همه زخم جفا از کف یار آمده است",
+    "دیشب به سیل اشک ره خواب می‌زدم | نقشی به یاد خط تو بر آب می‌زدم"
+];
+
+// =============================================
+// Load Menu
+// =============================================
 async function loadMenu() {
     try {
         const res = await fetch('data/menu.json');
@@ -10,7 +32,16 @@ async function loadMenu() {
     renderProducts('all');
 }
 
-// نمایش محصولات
+// =============================================
+// Format Price
+// =============================================
+function formatPrice(p) {
+    return parseInt(p).toLocaleString('fa-IR');
+}
+
+// =============================================
+// Render Products
+// =============================================
 function renderProducts(category) {
     let items = [];
     if (category === 'all') {
@@ -31,14 +62,16 @@ function renderProducts(category) {
         return `
             <div class="product-card ${isSelected ? 'selected' : ''}" onclick="toggleItem('${item.id}')">
                 <div class="product-card-name">${item.name}</div>
-                <div class="product-card-price">${formatPrice(item.price)}</div>
+                <div class="product-card-price">${formatPrice(item.price)} تومان</div>
                 ${isSelected ? '<div style="color:green;margin-top:4px;">✓ انتخاب شده</div>' : ''}
             </div>
         `;
     }).join('');
 }
 
-// انتخاب/حذف محصول
+// =============================================
+// Toggle Item
+// =============================================
 function toggleItem(id) {
     const allItems = [...(menuData.hot || []), ...(menuData.cold || []), ...(menuData.tea || [])];
     const item = allItems.find(i => i.id === id);
@@ -56,7 +89,9 @@ function toggleItem(id) {
     renderOrderItems();
 }
 
-// نمایش سفارشات
+// =============================================
+// Render Order Items
+// =============================================
 function renderOrderItems() {
     const container = document.getElementById('orderItems');
     const totalSection = document.getElementById('totalSection');
@@ -91,14 +126,18 @@ function renderOrderItems() {
     document.getElementById('totalPrice').textContent = total.toLocaleString('fa-IR');
 }
 
-// تغییر تعداد
+// =============================================
+// Change Qty
+// =============================================
 function changeQty(index, delta) {
     selectedItems[index].qty += delta;
     if (selectedItems[index].qty < 1) selectedItems[index].qty = 1;
     renderOrderItems();
 }
 
-// حذف آیتم
+// =============================================
+// Remove Item
+// =============================================
 function removeItem(index) {
     selectedItems.splice(index, 1);
     const activeCategory = document.querySelector('.category-tab.active').dataset.category;
@@ -106,7 +145,9 @@ function removeItem(index) {
     renderOrderItems();
 }
 
-// حذف همه
+// =============================================
+// Clear Order
+// =============================================
 function clearOrder() {
     if (!confirm('حذف همه سفارشات؟')) return;
     selectedItems = [];
@@ -115,87 +156,216 @@ function clearOrder() {
     renderOrderItems();
 }
 
-// چاپ فاکتور
+// =============================================
+// 🆕 Print Order - پرینتر فروشگاهی
+// =============================================
 function printOrder() {
     if (selectedItems.length === 0) return alert('محصولی انتخاب نشده!');
 
-    const customerName = document.getElementById('customerName').value || '---------';
-    const customerPhone = document.getElementById('customerPhone').value || '---------';
-    const customerTable = document.getElementById('customerTable').value || '---------';
-    const orderNote = document.getElementById('orderNote').value || '---------';
+    const customerName = document.getElementById('customerName').value || 'مشتری';
+    const customerPhone = document.getElementById('customerPhone').value || '';
+    const customerTable = document.getElementById('customerTable').value || '';
+    const orderNote = document.getElementById('orderNote').value || '';
+
+    // انتخاب فال رندوم
+    const randomFal = hafezFal[Math.floor(Math.random() * hafezFal.length)];
+
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('fa-IR');
+    const timeStr = now.toLocaleTimeString('fa-IR');
+    const orderId = Math.floor(Math.random() * 9000) + 1000;
 
     let total = 0;
     let itemsHTML = '';
+    
     selectedItems.forEach((item, i) => {
         const itemTotal = item.price * item.qty;
         total += itemTotal;
         itemsHTML += `
             <tr>
-                <td>${i + 1}</td>
+                <td class="r">${item.qty}</td>
                 <td>${item.name}</td>
-                <td>${formatPrice(item.price)}</td>
-                <td>${item.qty}</td>
-                <td>${formatPrice(itemTotal)}</td>
+                <td class="l">${formatPrice(itemTotal)}</td>
             </tr>
         `;
     });
 
-    const printWindow = window.open('', '_blank');
+    const printWindow = window.open('', '_blank', 'width=300,height=600');
     printWindow.document.write(`
         <!DOCTYPE html>
         <html lang="fa" dir="rtl">
         <head>
             <meta charset="UTF-8">
-            <title>فاکتور - کافه آرا</title>
+            <title>فاکتور</title>
             <style>
                 * { margin: 0; padding: 0; box-sizing: border-box; }
-                body { font-family: Tahoma, sans-serif; padding: 30px; direction: rtl; }
-                .header { text-align: center; margin-bottom: 20px; border-bottom: 2px dashed #000; padding-bottom: 15px; }
-                .header h1 { font-size: 22px; margin-bottom: 5px; }
-                .header p { font-size: 14px; color: #666; }
-                .info { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 13px; }
-                .info div { flex: 1; }
-                table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-                th, td { border: 1px solid #ddd; padding: 8px; text-align: center; font-size: 13px; }
-                th { background: #3E2723; color: #fff; }
-                .total { text-align: left; font-size: 18px; font-weight: bold; margin-top: 15px; padding: 10px; background: #f5f5f5; border-radius: 8px; }
-                .footer { text-align: center; margin-top: 30px; font-size: 12px; color: #999; border-top: 1px solid #ddd; padding-top: 15px; }
-                @media print { body { padding: 10px; } button { display: none; } }
-                button { padding: 10px 20px; background: #3E2723; color: #fff; border: none; border-radius: 6px; cursor: pointer; margin-top: 15px; font-size: 14px; }
+                body {
+                    font-family: 'Tahoma', sans-serif;
+                    width: 80mm;
+                    margin: 0 auto;
+                    padding: 5mm;
+                    background: #fff;
+                    font-size: 11px;
+                    line-height: 1.6;
+                    color: #000;
+                }
+                .header {
+                    text-align: center;
+                    border-bottom: 1px dashed #000;
+                    padding-bottom: 3mm;
+                    margin-bottom: 3mm;
+                }
+                .header h2 { font-size: 14px; margin-bottom: 1mm; }
+                .header p { font-size: 9px; color: #333; }
+                .info {
+                    font-size: 9px;
+                    margin-bottom: 3mm;
+                    border-bottom: 1px dotted #ccc;
+                    padding-bottom: 2mm;
+                }
+                .info div { margin-bottom: 0.5mm; }
+                .info span { font-weight: bold; }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-bottom: 3mm;
+                    font-size: 10px;
+                }
+                th {
+                    border-bottom: 1px solid #000;
+                    border-top: 1px solid #000;
+                    padding: 1.5mm 0;
+                    font-size: 9px;
+                }
+                td {
+                    padding: 1mm 0;
+                    border-bottom: 1px dotted #ccc;
+                }
+                .r { text-align: center; width: 15%; }
+                .l { text-align: left; width: 30%; }
+                .total {
+                    text-align: left;
+                    font-size: 14px;
+                    font-weight: bold;
+                    padding: 2mm 5mm;
+                    background: #f5f5f5;
+                    margin: 3mm 0;
+                    border-radius: 4px;
+                }
+                .total span { float: left; }
+                .fal {
+                    text-align: center;
+                    border-top: 1px dashed #000;
+                    border-bottom: 1px dashed #000;
+                    padding: 3mm 0;
+                    margin: 3mm 0;
+                    font-size: 9px;
+                    font-style: italic;
+                    color: #555;
+                    line-height: 2;
+                }
+                .fal .label {
+                    font-style: normal;
+                    font-weight: bold;
+                    font-size: 10px;
+                    color: #000;
+                    margin-bottom: 2mm;
+                }
+                .footer {
+                    text-align: center;
+                    font-size: 9px;
+                    margin-top: 3mm;
+                    color: #666;
+                }
+                .barcode {
+                    text-align: center;
+                    font-size: 8px;
+                    letter-spacing: 2px;
+                    margin: 2mm 0;
+                    color: #999;
+                }
+                @media print {
+                    body { 
+                        width: 80mm;
+                        margin: 0;
+                        padding: 3mm;
+                    }
+                    @page {
+                        size: 80mm auto;
+                        margin: 0;
+                    }
+                }
+                button {
+                    display: block;
+                    width: 100%;
+                    padding: 8px;
+                    background: #000;
+                    color: #fff;
+                    border: none;
+                    font-size: 14px;
+                    cursor: pointer;
+                    margin-top: 5mm;
+                    font-family: inherit;
+                }
             </style>
         </head>
         <body>
             <div class="header">
-                <h1>🧾 فاکتور سفارش</h1>
-                <p>کافه آرا - ARA Cafe</p>
-                <p>تاریخ: ${new Date().toLocaleDateString('fa-IR')} | ساعت: ${new Date().toLocaleTimeString('fa-IR')}</p>
+                <h2>☕ کافه آرا</h2>
+                <p>ARA Cafe</p>
+                <p>طعمی به گرمی یک خاطره</p>
             </div>
+            
             <div class="info">
-                <div><strong>👤 مشتری:</strong> ${customerName}</div>
-                <div><strong>📱 تماس:</strong> ${customerPhone}</div>
-                <div><strong>🪑 میز:</strong> ${customerTable}</div>
-                <div><strong>📝 یادداشت:</strong> ${orderNote}</div>
+                <div><span>شماره سفارش:</span> #${orderId}</div>
+                <div><span>تاریخ:</span> ${dateStr} | <span>ساعت:</span> ${timeStr}</div>
+                ${customerTable ? `<div><span>میز:</span> ${customerTable}</div>` : ''}
+                <div><span>مشتری:</span> ${customerName}</div>
+                ${customerPhone ? `<div><span>تماس:</span> ${customerPhone}</div>` : ''}
+                ${orderNote ? `<div><span>یادداشت:</span> ${orderNote}</div>` : ''}
             </div>
+            
             <table>
                 <thead>
-                    <tr><th>#</th><th>محصول</th><th>قیمت واحد</th><th>تعداد</th><th>جمع</th></tr>
+                    <tr>
+                        <th class="r">تعداد</th>
+                        <th>محصول</th>
+                        <th class="l">قیمت</th>
+                    </tr>
                 </thead>
-                <tbody>${itemsHTML}</tbody>
+                <tbody>
+                    ${itemsHTML}
+                </tbody>
             </table>
-            <div class="total">💰 جمع کل: ${total.toLocaleString('fa-IR')} تومان</div>
-            <div style="text-align:center;"><button onclick="window.print()">🖨️ چاپ</button></div>
-            <div class="footer">با تشکر از شما - کافه آرا ☕</div>
+            
+            <div class="total">
+                جمع کل: <span>${total.toLocaleString('fa-IR')} تومان</span>
+            </div>
+            
+            <div class="fal">
+                <div class="label">🕊️ فال حافظ</div>
+                ${randomFal}
+            </div>
+            
+            <div class="barcode">
+                *${orderId}*${Date.now().toString().slice(-8)}*
+            </div>
+            
+            <div class="footer">
+                با تشکر از حضور شما<br>
+                کافه آرا - ARA Cafe ☕
+            </div>
+            
+            <button onclick="window.print()">🖨️ چاپ فاکتور</button>
         </body>
         </html>
     `);
     printWindow.document.close();
 }
 
-function formatPrice(p) {
-    return parseInt(p).toLocaleString('fa-IR');
-}
-
-// تب‌های دسته‌بندی
+// =============================================
+// Category Tabs
+// =============================================
 document.querySelectorAll('.category-tab').forEach(tab => {
     tab.addEventListener('click', function() {
         document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
@@ -204,5 +374,7 @@ document.querySelectorAll('.category-tab').forEach(tab => {
     });
 });
 
-// لود اولیه
+// =============================================
+// Init
+// =============================================
 loadMenu();
