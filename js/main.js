@@ -4,35 +4,22 @@
 
 let menuData = { hot: [], cold: [], tea: [] };
 
-// =============================================
-// لود محصولات از فایل JSON
-// =============================================
 async function loadMenuData() {
     try {
-        console.log('📡 در حال لود menu.json...');
         const response = await fetch('data/menu.json');
         if (response.ok) {
             menuData = await response.json();
-            console.log('✅ menu.json لود شد');
-        } else {
-            console.error('❌ خطا در لود menu.json');
         }
     } catch (error) {
-        console.error('❌ خطا:', error);
+        console.warn('Error loading menu data');
     }
     renderMenu();
 }
 
-// =============================================
-// فرمت قیمت
-// =============================================
 function formatPrice(price) {
     return parseInt(price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' تومان';
 }
 
-// =============================================
-// آیکون دسته‌بندی‌ها
-// =============================================
 function getCategoryIcon(category) {
     const icons = {
         hot: `<svg width="40" height="40" viewBox="0 0 50 50"><circle cx="25" cy="25" r="22" fill="#6F4E37" opacity="0.1"/><path d="M15 35 Q15 15 25 10 Q35 15 35 35Z" fill="#6F4E37" stroke="#3E2723" stroke-width="2"/><path d="M12 30 Q12 20 18 18" stroke="#D7CCC8" fill="none" stroke-width="2"/></svg>`,
@@ -42,18 +29,12 @@ function getCategoryIcon(category) {
     return icons[category] || icons.hot;
 }
 
-// =============================================
-// Escape HTML
-// =============================================
 function escapeHTML(str) {
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
 }
 
-// =============================================
-// ساخت HTML کارت محصول - عکس بالا، متن پایین
-// =============================================
 function createMenuItemHTML(item) {
     return `
         <div class="menu-item" data-category="${item.category}" data-id="${item.id}">
@@ -80,9 +61,6 @@ function createMenuItemHTML(item) {
     `;
 }
 
-// =============================================
-// رندر منو
-// =============================================
 function renderMenu() {
     const hotGrid = document.getElementById('hot-drinks-grid');
     if (hotGrid) {
@@ -106,43 +84,29 @@ function renderMenu() {
     }
 }
 
-// =============================================
-// Preloader
-// =============================================
 function initPreloader() {
     const preloader = document.getElementById('preloader');
     if (!preloader) return;
     
-    const forceHideTimeout = setTimeout(() => {
-        hidePreloader(preloader);
-    }, 3000);
+    const forceHideTimeout = setTimeout(() => { hidePreloader(preloader); }, 3000);
     
     window.addEventListener('load', () => {
         clearTimeout(forceHideTimeout);
-        setTimeout(() => {
-            hidePreloader(preloader);
-        }, 500);
+        setTimeout(() => { hidePreloader(preloader); }, 500);
     });
     
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
         clearTimeout(forceHideTimeout);
-        setTimeout(() => {
-            hidePreloader(preloader);
-        }, 1000);
+        setTimeout(() => { hidePreloader(preloader); }, 1000);
     }
 }
 
 function hidePreloader(preloader) {
     if (!preloader || preloader.classList.contains('hidden')) return;
     preloader.classList.add('hidden');
-    setTimeout(() => {
-        preloader.style.display = 'none';
-    }, 500);
+    setTimeout(() => { preloader.style.display = 'none'; }, 500);
 }
 
-// =============================================
-// اسکرول نرم
-// =============================================
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -155,9 +119,6 @@ function initSmoothScroll() {
     });
 }
 
-// =============================================
-// اسکرول دکمه بنر
-// =============================================
 function initBannerScroll() {
     const bannerScroll = document.querySelector('.banner-scroll');
     if (bannerScroll) {
@@ -170,9 +131,6 @@ function initBannerScroll() {
     }
 }
 
-// =============================================
-// افکت هدر
-// =============================================
 function initHeaderScroll() {
     const header = document.getElementById('header');
     if (header) {
@@ -184,9 +142,6 @@ function initHeaderScroll() {
     }
 }
 
-// =============================================
-// دکمه برگشت به بالا
-// =============================================
 function initBackToTop() {
     const backToTopBtn = document.getElementById('backToTop');
     if (!backToTopBtn) return;
@@ -207,11 +162,8 @@ function initBackToTop() {
     });
 }
 
-// =============================================
-// Start
-// =============================================
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('🚀 کافه آرا - ARA Cafe');
+    console.log('☕ کافه آرا - ARA Cafe');
     
     await loadMenuData();
     initPreloader();
@@ -222,5 +174,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     const total = (menuData.hot?.length || 0) + (menuData.cold?.length || 0) + (menuData.tea?.length || 0);
     console.log('📋 تعداد محصولات:', total);
-    console.log('✅ سایت آماده است');
 });
