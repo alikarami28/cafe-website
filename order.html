@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>ثبت سفارش | کافه آرا</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .order-container {
+            max-width: 900px;
+            margin: 80px auto 40px;
+            padding: 20px;
+        }
+        .order-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+        .order-header h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .category-tab {
+            padding: 10px 20px;
+            background: var(--white);
+            border: 2px solid var(--accent-color);
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            color: var(--primary-color);
+        }
+        .category-tab.active {
+            background: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        .product-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        .product-card.selected {
+            border-color: var(--primary-color);
+            background: rgba(62,39,35,0.05);
+        }
+        .product-card-name {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+        }
+        .product-card-price {
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+        .selected-items {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .selected-items h3 {
+            color: var(--primary-color);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            gap: 12px;
+        }
+        .item-row-name {
+            flex: 1;
+            font-weight: bold;
+            color: var(--text-primary);
+        }
+        .item-row-price {
+            color: var(--text-secondary);
+            min-width: 80px;
+            text-align: center;
+        }
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid var(--accent-color);
+            background: var(--white);
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+        }
+        .qty-value {
+            min-width: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .item-row-total {
+            font-weight: bold;
+            color: var(--primary-color);
+            min-width: 90px;
+            text-align: left;
+        }
+        .delete-btn {
+            background: #ff6b6b;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .total-section {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            padding: 16px;
+            background: rgba(62,39,35,0.05);
+            border-radius: 12px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-print, .btn-clear, .btn-back {
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        .btn-print {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        .btn-clear {
+            background: #ff6b6b;
+            color: #fff;
+        }
+        .btn-back {
+            background: var(--accent-color);
+            color: #fff;
+        }
+        .customer-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .customer-info input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #8D6E63;
+        }
+        @media (max-width: 768px) {
+            .order-container { padding: 10px; margin-top: 100px; }
+            .products-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+            .customer-info { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="order-container">
+        <div class="order-header">
+            <h1>🧾 ثبت سفارش</h1>
+            <p>کافه آرا - ARA Cafe</p>
+        </div>
+
+        <div class="category-tabs">
+            <button class="category-tab active" data-category="all">همه</button>
+            <button class="category-tab" data-category="hot">☕ نوشیدنی گرم</button>
+            <button class="category-tab" data-category="cold">🧊 نوشیدنی سرد</button>
+            <button class="category-tab" data-category="tea">🍵 چای و دمنوش</button>
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+
+        <div class="selected-items" id="selectedItems">
+            <h3>🛒 سفارشات انتخاب شده</h3>
+            
+            <div class="customer-info">
+                <input type="text" id="customerName" placeholder="👤 نام مشتری">
+                <input type="text" id="customerPhone" placeholder="📱 شماره تماس">
+                <input type="text" id="customerTable" placeholder="🪑 شماره میز">
+                <input type="text" id="orderNote" placeholder="📝 یادداشت سفارش">
+            </div>
+
+            <div id="orderItems">
+                <p class="empty-state">محصولی انتخاب نشده</p>
+            </div>
+
+            <div class="total-section" id="totalSection" style="display:none;">
+                جمع کل: <span id="totalPrice">0</span> تومان
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-back" onclick="window.location.href='admin.html'">🔙 بازگشت به پنل</button>
+                <button class="btn-clear" onclick="clearOrder()">🗑️ حذف همه</button>
+                <button class="btn-print" onclick="printOrder()">🖨️ چاپ فاکتور</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/order.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>چاپ فاکتور</title>
+    <style>
+        body { font-family: Tahoma; padding: 20px; }
+        @media print { button { display: none; } }
+    </style>
+</head>
+<body>
+    <div id="content"></div>
+    <button onclick="window.print()">چاپ</button>
+    <script>
+        document.getElementById('content').innerHTML = localStorage.getItem('printOrder') || '';
+    </script>
+</body>
+</html>
