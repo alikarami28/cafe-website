@@ -157,7 +157,7 @@ function clearOrder() {
 }
 
 // =============================================
-// 🆕 Print Order - پرینتر فروشگاهی
+// 🆕 Print Order - با مالیات ۱۰٪
 // =============================================
 function printOrder() {
     if (selectedItems.length === 0) return alert('محصولی انتخاب نشده!');
@@ -167,7 +167,6 @@ function printOrder() {
     const customerTable = document.getElementById('customerTable').value || '';
     const orderNote = document.getElementById('orderNote').value || '';
 
-    // انتخاب فال رندوم
     const randomFal = hafezFal[Math.floor(Math.random() * hafezFal.length)];
 
     const now = new Date();
@@ -175,12 +174,12 @@ function printOrder() {
     const timeStr = now.toLocaleTimeString('fa-IR');
     const orderId = Math.floor(Math.random() * 9000) + 1000;
 
-    let total = 0;
+    let subtotal = 0;
     let itemsHTML = '';
     
     selectedItems.forEach((item, i) => {
         const itemTotal = item.price * item.qty;
-        total += itemTotal;
+        subtotal += itemTotal;
         itemsHTML += `
             <tr>
                 <td class="r">${item.qty}</td>
@@ -189,6 +188,9 @@ function printOrder() {
             </tr>
         `;
     });
+
+    const tax = Math.round(subtotal * 0.1);
+    const total = subtotal + tax;
 
     const printWindow = window.open('', '_blank', 'width=300,height=600');
     printWindow.document.write(`
@@ -243,16 +245,25 @@ function printOrder() {
                 }
                 .r { text-align: center; width: 15%; }
                 .l { text-align: left; width: 30%; }
-                .total {
-                    text-align: left;
-                    font-size: 14px;
-                    font-weight: bold;
-                    padding: 2mm 5mm;
-                    background: #f5f5f5;
+                .summary {
                     margin: 3mm 0;
-                    border-radius: 4px;
+                    border-top: 1px solid #000;
+                    border-bottom: 1px solid #000;
+                    padding: 2mm 0;
                 }
-                .total span { float: left; }
+                .summary-row {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 1mm 0;
+                    font-size: 10px;
+                }
+                .total-row {
+                    font-weight: bold;
+                    font-size: 13px;
+                    border-top: 1px dashed #ccc;
+                    padding-top: 2mm;
+                    margin-top: 1mm;
+                }
                 .fal {
                     text-align: center;
                     border-top: 1px dashed #000;
@@ -338,8 +349,19 @@ function printOrder() {
                 </tbody>
             </table>
             
-            <div class="total">
-                جمع کل: <span>${total.toLocaleString('fa-IR')} تومان</span>
+            <div class="summary">
+                <div class="summary-row">
+                    <span>جمع سفارش:</span>
+                    <span>${subtotal.toLocaleString('fa-IR')} تومان</span>
+                </div>
+                <div class="summary-row">
+                    <span>مالیات بر ارزش افزوده (۱۰٪):</span>
+                    <span>${tax.toLocaleString('fa-IR')} تومان</span>
+                </div>
+                <div class="summary-row total-row">
+                    <span>💰 مبلغ قابل پرداخت:</span>
+                    <span>${total.toLocaleString('fa-IR')} تومان</span>
+                </div>
             </div>
             
             <div class="fal">
