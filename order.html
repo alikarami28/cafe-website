@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>ثبت سفارش | کافه آرا</title>
+    
+    <!-- 🆕 PWA -->
+    <meta name="theme-color" content="#3E2723">
+    <link rel="manifest" href="manifest.json">
+    
     <link rel="stylesheet" href="css/style.css">
     <style>
         .order-container {
@@ -94,106 +99,37 @@
             border-bottom: 1px solid #eee;
             gap: 12px;
         }
-        .item-row-name {
-            flex: 1;
-            font-weight: bold;
-            color: var(--text-primary);
-        }
-        .item-row-price {
-            color: var(--text-secondary);
-            min-width: 80px;
-            text-align: center;
-        }
+        .item-row-name { flex: 1; font-weight: bold; color: var(--text-primary); }
+        .item-row-price { color: var(--text-secondary); min-width: 80px; text-align: center; }
         .qty-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 1px solid var(--accent-color);
-            background: var(--white);
-            cursor: pointer;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 32px; height: 32px; border-radius: 50%;
+            border: 1px solid var(--accent-color); background: var(--white);
+            cursor: pointer; font-size: 1.2rem;
+            display: flex; align-items: center; justify-content: center;
             color: var(--primary-color);
         }
-        .qty-value {
-            min-width: 30px;
-            text-align: center;
-            font-weight: bold;
-        }
-        .item-row-total {
-            font-weight: bold;
-            color: var(--primary-color);
-            min-width: 90px;
-            text-align: left;
-        }
-        .delete-btn {
-            background: #ff6b6b;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 4px 8px;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
+        .qty-value { min-width: 30px; text-align: center; font-weight: bold; }
+        .item-row-total { font-weight: bold; color: var(--primary-color); min-width: 90px; text-align: left; }
+        .delete-btn { background: #ff6b6b; color: #fff; border: none; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-size: 0.8rem; }
         .total-section {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            padding: 16px;
-            background: rgba(62,39,35,0.05);
-            border-radius: 12px;
+            margin-top: 20px; text-align: center; font-size: 1.4rem; font-weight: bold;
+            color: var(--primary-color); padding: 16px;
+            background: rgba(62,39,35,0.05); border-radius: 12px;
         }
-        .action-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+        .action-buttons { display: flex; gap: 12px; margin-top: 20px; justify-content: center; flex-wrap: wrap; }
         .btn-print, .btn-clear, .btn-back {
-            padding: 12px 24px;
-            border-radius: 25px;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            font-family: inherit;
-            transition: all 0.3s;
+            padding: 12px 24px; border-radius: 25px; border: none;
+            cursor: pointer; font-size: 1rem; font-family: inherit; transition: all 0.3s;
         }
-        .btn-print {
-            background: var(--primary-color);
-            color: var(--white);
-        }
-        .btn-clear {
-            background: #ff6b6b;
-            color: #fff;
-        }
-        .btn-back {
-            background: var(--accent-color);
-            color: #fff;
-        }
-        .customer-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+        .btn-print { background: var(--primary-color); color: var(--white); }
+        .btn-clear { background: #ff6b6b; color: #fff; }
+        .btn-back { background: var(--accent-color); color: #fff; }
+        .customer-info { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
         .customer-info input {
-            width: 100%;
-            padding: 10px 14px;
-            border: 2px solid var(--accent-color);
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-family: inherit;
+            width: 100%; padding: 10px 14px; border: 2px solid var(--accent-color);
+            border-radius: 8px; font-size: 0.95rem; font-family: inherit;
         }
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #8D6E63;
-        }
+        .empty-state { text-align: center; padding: 40px; color: #8D6E63; }
         @media (max-width: 768px) {
             .order-container { padding: 10px; margin-top: 100px; }
             .products-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }

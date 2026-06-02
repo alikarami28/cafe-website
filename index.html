@@ -39,6 +39,14 @@
     <link rel="icon" type="image/png" sizes="32x32" href="images/logo.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/logo.png">
     
+    <!-- 🆕 PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3E2723">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ARA Cafe">
+    
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -81,7 +89,7 @@
             <div class="banner-overlay">
                 <div class="banner-content">
                     <a href="admin.html" class="banner-logo" title="ورود به پنل مدیریت">
-                    <img src="images/logo.png" alt="لوگوی کافه آرا" class="banner-logo-image" width="80" height="80">
+                        <img src="images/logo.png" alt="لوگوی کافه آرا" class="banner-logo-image" width="80" height="80">
                     </a>
                     <h1 class="banner-title">کافه آرا</h1>
                     <p class="banner-subtitle">ARA Cafe</p>
@@ -171,7 +179,7 @@
                 <p>🗓️ جمعه: ۱۰ صبح تا ۱۰ شب</p>
                 <div class="footer-contact">
                     <h4>تماس با ما</h4>
-                    <p>📞 تلفن: ۰۹۹۲۸۹۹۱۲۷۴</p>
+                    <p>📞 تلفن: ۰۲۱-۱۲۳۴۵۶۷۸</p>
                     <p>📍 آدرس: تهران</p>
                 </div>
             </div>
@@ -188,5 +196,18 @@
     </button>
 
     <script src="js/main.js"></script>
+    
+    <!-- 🆕 Register Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                    console.log('✅ Service Worker registered:', registration.scope);
+                }, function(err) {
+                    console.log('❌ Service Worker failed:', err);
+                });
+            });
+        }
+    </script>
 </body>
 </html>
