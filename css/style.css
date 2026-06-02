@@ -248,23 +248,6 @@ body {
     background: rgba(141, 110, 99, 0.2);
 }
 
-.admin-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--accent-color);
-    color: var(--white);
-    transition: var(--transition);
-}
-
-.admin-btn:hover {
-    background: var(--secondary-color);
-    transform: rotate(15deg);
-}
-
 /* =============================================
    Hero Banner Section
    ============================================= */
@@ -272,7 +255,7 @@ body {
     position: relative;
     width: 100%;
     min-height: 100vh;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-coffee) 100%);
+    background: #000000;
     overflow: hidden;
 }
 
@@ -291,15 +274,10 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
-    opacity: 0.4;
-    animation: bannerZoomIn 2s ease-out;
-}
-
-@keyframes bannerZoomIn {
-    from { transform: scale(1.1); opacity: 0; }
-    to { transform: scale(1); opacity: 0.4; }
+    opacity: 1;
+    animation: none;
 }
 
 .banner-overlay {
@@ -310,7 +288,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(180deg, rgba(62, 39, 35, 0.7) 0%, rgba(62, 39, 35, 0.5) 50%, rgba(62, 39, 35, 0.8) 100%);
+    background: transparent;
 }
 
 .banner-content {
@@ -349,7 +327,7 @@ body {
     color: var(--gold);
     margin-bottom: 8px;
     font-weight: bold;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .banner-subtitle {
@@ -357,13 +335,14 @@ body {
     color: var(--accent-color);
     letter-spacing: 4px;
     margin-bottom: 12px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
 .banner-description {
     font-size: 1.3rem;
     color: var(--light-cream);
     margin-bottom: 40px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
     font-style: italic;
 }
 
@@ -376,6 +355,7 @@ body {
     cursor: pointer;
     animation: bounce 2s infinite;
     transition: var(--transition);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
 
 .banner-scroll:hover {
@@ -449,7 +429,7 @@ body {
 }
 
 /* =============================================
-   Menu Grid - دسکتاپ: عکس بالا / موبایل: عکس راست
+   Menu Grid
    ============================================= */
 .menu-grid {
     display: grid;
@@ -466,7 +446,7 @@ body {
     position: relative;
     overflow: hidden;
     display: flex;
-    flex-direction: column;  /* پیش‌فرض: عمودی (عکس بالا) */
+    flex-direction: column;
 }
 
 .menu-item:hover {
@@ -496,7 +476,6 @@ body {
     background: linear-gradient(90deg, #66BB6A, #2E7D32);
 }
 
-/* کانتینر عکس */
 .menu-item-image {
     width: 100%;
     aspect-ratio: 9 / 16;
@@ -519,7 +498,6 @@ body {
     transform: scale(1.08);
 }
 
-/* آیکون پیش‌فرض */
 .menu-item-icon {
     width: 100%;
     aspect-ratio: 9 / 16;
@@ -542,7 +520,6 @@ body {
     transform: scale(1.1);
 }
 
-/* محتوای متن */
 .item-content {
     padding: 20px;
     flex: 1;
@@ -585,7 +562,6 @@ body {
     margin: 0;
 }
 
-/* افکت hover روی عکس */
 .menu-item-image::after {
     content: '';
     position: absolute;
@@ -603,7 +579,6 @@ body {
     opacity: 1;
 }
 
-/* Empty state */
 .menu-grid .empty-state {
     grid-column: 1 / -1;
     text-align: center;
@@ -615,7 +590,6 @@ body {
     border: 2px dashed rgba(141, 110, 99, 0.2);
 }
 
-/* انیمیشن کارت‌ها */
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
@@ -1131,7 +1105,7 @@ body {
 }
 
 /* =============================================
-   📱 Responsive Design - موبایل
+   Responsive Design
    ============================================= */
 @media (max-width: 768px) {
     .nav {
@@ -1152,11 +1126,24 @@ body {
     }
     
     .hero-banner {
-        min-height: 70vh;
+        min-height: auto;
     }
     
     .banner-container {
-        height: 70vh;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .banner-image {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+    
+    .banner-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
     }
     
     .banner-logo-image {
@@ -1177,14 +1164,13 @@ body {
         padding: 40px 1rem;
     }
     
-    /* 🆕 موبایل: ۱ ستون، عکس راست، متن چپ */
     .menu-grid {
         grid-template-columns: 1fr;
         gap: 16px;
     }
     
     .menu-item {
-        flex-direction: row !important;  /* افقی: عکس کنار متن */
+        flex-direction: row !important;
         align-items: center;
         gap: 16px;
         padding: 16px;
@@ -1241,7 +1227,6 @@ body {
         line-height: 1.5;
     }
     
-    /* نوار رنگی از بالا به راست */
     .menu-item::before {
         width: 4px;
         height: 100%;
